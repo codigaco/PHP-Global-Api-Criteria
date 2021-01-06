@@ -1,0 +1,21 @@
+{
+  "name": "quiquegilb/global-api-criteria",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Enrique Gil",
+      "email": "user@enriquegil.me"
+    }
+  ],
+  "require": {
+    "php": ">=7.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "QuiqueGilB\\GlobalApiCriteria\\": "src/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
+  }
+}
