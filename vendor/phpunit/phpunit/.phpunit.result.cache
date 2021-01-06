@@ -1,1 +1,0 @@
-C:37:"PHPUnit\Runner\DefaultTestResultCache":234:{a:2:{s:7:"defects";a:1:{s:81:"QuiqueGilB\GlobalApiCriteria\Shared\Filter\Domain\ValueObject\FilterTest::testing";i:3;}s:5:"times";a:1:{s:81:"QuiqueGilB\GlobalApiCriteria\Shared\Filter\Domain\ValueObject\FilterTest::testing";d:0.002;}}}
