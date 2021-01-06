@@ -2,22 +2,16 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Shared\Filter\Domain\Factory;
 
+use QuiqueGilB\GlobalApiCriteria\Shared\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\Shared\Filter\Domain\ValueObject\FilterGroup;
 use QuiqueGilB\GlobalApiCriteria\Shared\Filter\Domain\ValueObject\LogicalOperator;
 
 class FilterGroupFactory
 {
-
-    public static function fromString(string $filter): FilterGroup
+    private static function fromString(string $filter): FilterGroup
     {
-        $groups = self::splitGroups($filter);
-    }
-
-
-    private static function splitGroups(string $filter): array
-    {
+        $filterGroup = FilterGroup::create();
         $length = strlen($filter);
-        $parts = [];
 
         $charQuoted = null;
         $level = 0;
@@ -72,12 +66,12 @@ class FilterGroupFactory
             $str = trim(substr($filter, $splitFrom, $splitTo - $splitFrom));
             [$operator, $filterExpression] = self::extract($str);
 
-            $parts[] = [
-                'logicOperator' => $operator,
-                'filterExpression' => $filterExpression[0] === '('
+            $filterGroup->add(
+                new LogicalOperator($operator),
+                $filterExpression[0] === '('
                     ? self::splitGroups(substr($filterExpression, 1, strlen($filterExpression) - 2))
-                    : $filterExpression
-            ];
+                    : Filter::deserialize($filterExpression)
+            );
 
             $splitFrom = $splitTo + 1;
             $splitTo = $splitFrom;
@@ -91,7 +85,8 @@ class FilterGroupFactory
         if (null !== $charQuoted) {
             throw new \Exception('Invalid quotes');
         }
-        return $parts;
+
+        return $filterGroup;
     }
 
     private static function extract(string $filter): array

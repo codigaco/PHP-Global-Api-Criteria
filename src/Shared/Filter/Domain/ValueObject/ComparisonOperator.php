@@ -12,10 +12,12 @@ class ComparisonOperator
     public const GREATER_OR_EQUAL = 'ge';
     public const LESS = 'lt';
     public const LESS_OR_EQUAL = 'le';
+    public const IN = 'in';
 
     private const MAP = [
         "=" => self::EQUAL,
         "eq" => self::EQUAL,
+        "is" => self::EQUAL,
 
         "!=" => self::NOT_EQUAL,
         "<>" => self::NOT_EQUAL,
@@ -33,7 +35,9 @@ class ComparisonOperator
 
         "=<" => self::LESS_OR_EQUAL,
         "le" => self::LESS_OR_EQUAL,
-        "lte" => self::LESS_OR_EQUAL
+        "lte" => self::LESS_OR_EQUAL,
+
+        "in" => self::IN
     ];
 
     private $value;

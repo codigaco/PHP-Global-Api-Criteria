@@ -6,7 +6,6 @@ use PHPUnit\Util\Exception;
 
 class FilterGroup
 {
-    /** @var [0 => LogicalOperator, 1 => FilterGroup|Filter][] */
     private $value;
 
     private function __construct()
@@ -25,12 +24,16 @@ class FilterGroup
     }
 
     /**
-     * @param Filter|FilterGroup $filter
+     * @param Filter|FilterGroup|null $filter
      * @return FilterGroup
      */
-    public static function create($filter): self
+    public static function create($filter = null): self
     {
-        return (new static())->and($filter);
+        $instance = new static();
+        if (null !== $filter) {
+            $instance->and($filter);
+        }
+        return $instance;
     }
 
     /**
@@ -73,7 +76,7 @@ class FilterGroup
      * @param Filter|FilterGroup $filter
      * @return FilterGroup
      */
-    private function add(LogicalOperator $logicalOperator, $filter): self
+    public function add(LogicalOperator $logicalOperator, $filter): self
     {
         if (!$filter instanceof FilterGroup && !$filter instanceof Filter) {
             throw new Exception('Invalid filter');
