@@ -3,10 +3,10 @@
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject;
 
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Factory\FilterGroupFactory;
-use TypeError;
 
-class FilterGroup
+class FilterGroup extends BaseFilter
 {
+    /** @var BaseFilter[] */
     private $value;
 
     private function __construct()
@@ -14,21 +14,7 @@ class FilterGroup
         $this->value = [];
     }
 
-    public static function createWithAnds(...$filters): self
-    {
-        $group = new static();
-        foreach ($filters as $filter) {
-            $group->and($filter);
-        }
-
-        return $group;
-    }
-
-    /**
-     * @param Filter|FilterGroup|null $filter
-     * @return FilterGroup
-     */
-    public static function create($filter = null): self
+    public static function create(BaseFilter $filter = null): self
     {
         $instance = new static();
         if (null !== $filter) {
@@ -38,19 +24,20 @@ class FilterGroup
     }
 
     /**
-     * @param Filter|FilterGroup $filter
-     * @return FilterGroup
+     * @param int $index
+     * @return FilterGroup|Filter
      */
-    public function and($filter): self
+    public function get(int $index): BaseFilter
+    {
+        return $this->value[$index];
+    }
+
+    public function and(BaseFilter $filter): self
     {
         return $this->add(LogicalOperator::and(), $filter);
     }
 
-    /**
-     * @param Filter|FilterGroup $filter
-     * @return FilterGroup
-     */
-    public function or(Filter $filter): self
+    public function or(BaseFilter $filter): self
     {
         return $this->add(LogicalOperator::or(), $filter);
     }
@@ -60,33 +47,9 @@ class FilterGroup
         return count($this->value) === 1;
     }
 
-    public function forEach(callable $callable, bool $recursive = false): void
+    public function add(LogicalOperator $logicalOperator, BaseFilter $filter): self
     {
-        foreach ($this->value as $value) {
-            $callable($value[0], $value[1]);
-
-            if (true === $recursive && $value[1] instanceof self) {
-                $value[1]->forEach($callable, $recursive);
-            }
-        }
-    }
-
-    /**
-     * @param LogicalOperator $logicalOperator
-     * @param Filter|FilterGroup $filter
-     * @return FilterGroup
-     */
-    public function add(LogicalOperator $logicalOperator, $filter): self
-    {
-        if (!$filter instanceof self && !$filter instanceof Filter) {
-            throw new TypeError('Invalid filter');
-        }
-
-        $this->value[] = [
-            $logicalOperator,
-            $filter
-        ];
-
+        $this->value[] = $filter->setLogicOperator($logicalOperator);
         return $this;
     }
 
@@ -99,13 +62,12 @@ class FilterGroup
     {
         $serialized = '';
 
-        /** @var LogicalOperator $logicalOperator */
-        /** @var Filter|FilterGroup $filter */
-        foreach ($this->value as $item) {
-            [$logicalOperator, $filter] = $item;
-
-            $expresion = sprintf($filter instanceof self ? '(%s)' : '%s', $filter->serialize());
-            $serialized .= ('' === $serialized ? '' : ' ' . $logicalOperator->value()) . ' ' . $expresion;
+        foreach ($this->value as $baseFilter) {
+            $expresion = sprintf(
+                $baseFilter instanceof self ? '(%s)' : '%s',
+                $baseFilter->serialize()
+            );
+            $serialized .= ('' === $serialized ? '' : ' ' . $baseFilter->logicalOperator()->value()) . ' ' . $expresion;
         }
 
         return trim($serialized);
