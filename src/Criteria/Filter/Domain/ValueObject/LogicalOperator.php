@@ -2,7 +2,7 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject;
 
-use PHPUnit\Util\Exception;
+use RuntimeException;
 
 class LogicalOperator
 {
@@ -31,8 +31,8 @@ class LogicalOperator
 
     public static function validate(string $operator): void
     {
-        if (!in_array($operator, array_keys(self::MAP))) {
-            throw new Exception('Invalid logical operator');
+        if (!array_key_exists($operator, self::MAP)) {
+            throw new RuntimeException('Invalid logical operator');
         }
     }
 

@@ -28,7 +28,7 @@ class Filter
         return $this->operator;
     }
 
-    public function value()
+    public function value(): Value
     {
         return $this->value;
     }
@@ -43,12 +43,15 @@ class Filter
 
         $value = substr($filterExpression, $secondSpace + 1);
 
-        return new static(new Field($field), new ComparisonOperator($operator), Value::deserialize($value));
+        return new static(
+            new Field($field),
+            new ComparisonOperator($operator),
+            Value::deserialize($value)
+        );
     }
 
     public function serialize(): string
     {
         return $this->field->value() . ' ' . $this->operator->value() . ' ' . $this->value->serialize();
     }
-
 }

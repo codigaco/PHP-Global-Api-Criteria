@@ -23,7 +23,7 @@ class Paginate
         return $this->offset;
     }
 
-    public function create(?Limit $limit, Offset $offset = null)
+    public function create(?Limit $limit, Offset $offset = null): self
     {
         return new static($limit, $offset);
     }

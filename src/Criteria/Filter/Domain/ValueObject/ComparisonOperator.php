@@ -2,7 +2,7 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject;
 
-use PHPUnit\Util\Exception;
+use RuntimeException;
 
 class ComparisonOperator
 {
@@ -54,8 +54,8 @@ class ComparisonOperator
 
     public static function validate(string $operator): void
     {
-        if (!in_array($operator, array_keys(self::MAP))) {
-            throw new Exception('Invalid comparison operator');
+        if (!array_key_exists($operator, self::MAP)) {
+            throw new RuntimeException('Invalid comparison operator');
         }
     }
 

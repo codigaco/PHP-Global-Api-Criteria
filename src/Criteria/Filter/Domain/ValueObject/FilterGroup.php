@@ -65,12 +65,11 @@ class FilterGroup
         foreach ($this->value as $value) {
             $callable($value[0], $value[1]);
 
-            if (true === $recursive && $value[1] instanceof FilterGroup) {
+            if (true === $recursive && $value[1] instanceof self) {
                 $value[1]->forEach($callable, $recursive);
             }
         }
     }
-
 
     /**
      * @param LogicalOperator $logicalOperator
@@ -79,7 +78,7 @@ class FilterGroup
      */
     public function add(LogicalOperator $logicalOperator, $filter): self
     {
-        if (!$filter instanceof FilterGroup && !$filter instanceof Filter) {
+        if (!$filter instanceof self && !$filter instanceof Filter) {
             throw new TypeError('Invalid filter');
         }
 
@@ -96,7 +95,6 @@ class FilterGroup
         return FilterGroupFactory::fromString($filter);
     }
 
-
     public function serialize(): string
     {
         $serialized = '';
@@ -106,7 +104,7 @@ class FilterGroup
         foreach ($this->value as $item) {
             [$logicalOperator, $filter] = $item;
 
-            $expresion = sprintf($filter instanceof FilterGroup ? '(%s)' : '%s', $filter->serialize());
+            $expresion = sprintf($filter instanceof self ? '(%s)' : '%s', $filter->serialize());
             $serialized .= ('' === $serialized ? '' : ' ' . $logicalOperator->value()) . ' ' . $expresion;
         }
 

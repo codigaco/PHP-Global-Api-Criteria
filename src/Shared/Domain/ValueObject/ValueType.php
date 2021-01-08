@@ -73,7 +73,7 @@ class ValueType
             return new self(self::TYPE_BOOLEAN);
         }
 
-        $parts = StringHelper::split($value, ',');
+        $parts = StringHelper::split($value);
         if (1 < count($parts)) {
             return new self(self::TYPE_ARRAY);
         }
