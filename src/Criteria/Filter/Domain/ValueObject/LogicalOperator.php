@@ -2,14 +2,12 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject;
 
-use RuntimeException;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\InvalidLogicalOperatorException;
 
 class LogicalOperator
 {
     public const AND = 'and';
     public const OR = 'or';
-//    public const NOT = 'not';
-
 
     private const MAP = [
         "&&" => self:: AND,
@@ -17,14 +15,13 @@ class LogicalOperator
 
         "||" => self:: OR,
         "or" => self:: OR,
-
-//        "not" => self::NOT,
     ];
 
     private $value;
 
     public function __construct(string $operator)
     {
+        $operator = strtolower($operator);
         self::validate($operator);
         $this->value = $operator;
     }
@@ -32,8 +29,13 @@ class LogicalOperator
     public static function validate(string $operator): void
     {
         if (!array_key_exists($operator, self::MAP)) {
-            throw new RuntimeException('Invalid logical operator');
+            throw new InvalidLogicalOperatorException($operator);
         }
+    }
+
+    public static function create(string $operator): self
+    {
+        return new static($operator);
     }
 
     public static function and(): self
@@ -49,6 +51,16 @@ class LogicalOperator
     public function value(): string
     {
         return $this->value;
+    }
+
+    public function isAnd(): bool
+    {
+        return self::MAP[$this->value] === self:: AND;
+    }
+
+    public function isOr(): bool
+    {
+        return self::MAP[$this->value] === self:: OR;
     }
 
     public static function acceptedValues(): array
