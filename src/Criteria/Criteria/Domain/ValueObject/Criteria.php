@@ -1,5 +1,6 @@
 <?php
 
+namespace QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject;
 
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderGroup;

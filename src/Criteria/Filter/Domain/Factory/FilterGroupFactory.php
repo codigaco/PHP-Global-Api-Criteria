@@ -2,14 +2,21 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Factory;
 
-use InvalidGroupSyntaxException;
-use InvalidQuoteSyntaxException;
+use Exception;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\InvalidGroupSyntaxException;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\InvalidQuoteSyntaxException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\LogicalOperator;
 
 class FilterGroupFactory
 {
+    /**
+     * @param string $filter
+     * @return FilterGroup
+     * @throws InvalidGroupSyntaxException
+     * @throws InvalidQuoteSyntaxException
+     */
     public static function fromString(string $filter): FilterGroup
     {
         $filterGroup = FilterGroup::create();
@@ -70,7 +77,7 @@ class FilterGroupFactory
             $filterGroup->add(
                 new LogicalOperator($operator),
                 $filterExpression[0] === '('
-                    ? self::fromString(substr($filterExpression, 1, strlen($filterExpression) - 2))
+                    ? self::fromString(substr($filterExpression, 1, -1))
                     : Filter::deserialize($filterExpression)
             );
 
@@ -79,11 +86,11 @@ class FilterGroupFactory
         }
 
         if (0 !== $level) {
-            throw new InvalidGroupSyntaxException();
+            throw new InvalidGroupSyntaxException($level);
         }
 
         if (null !== $charQuoted) {
-            throw new InvalidQuoteSyntaxException();
+            throw new InvalidQuoteSyntaxException($charQuoted);
         }
 
         return $filterGroup;
@@ -97,7 +104,7 @@ class FilterGroupFactory
             $logicalOperator = new LogicalOperator($firstWord);
             return [$logicalOperator->value(), trim(substr($filter, $firstSpace))];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return [LogicalOperator:: AND, trim($filter)];
         }
     }

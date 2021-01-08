@@ -2,7 +2,7 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject;
 
-use PHPUnit\Util\Exception;
+use RuntimeException;
 
 class Offset
 {
@@ -13,11 +13,10 @@ class Offset
         $this->value = $offset;
     }
 
-
     public static function validate(int $offset): void
     {
         if (0 > $offset) {
-            throw new Exception('Invalid offset');
+            throw new RuntimeException('Invalid offset');
         }
     }
 

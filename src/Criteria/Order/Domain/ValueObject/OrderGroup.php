@@ -18,10 +18,10 @@ class OrderGroup
         return $this;
     }
 
-    public static function deserialize(string $orders): self
+    public static function deserialize(string $stringOrders): self
     {
         $orderGroup = new static();
-        $orders = explode(',', $orders);
+        $orders = explode(',', $stringOrders);
 
         foreach ($orders as $order) {
             $orderGroup->add(Order::deserialize($order));

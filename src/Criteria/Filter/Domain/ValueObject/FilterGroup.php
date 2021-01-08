@@ -2,6 +2,8 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject;
 
+use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\InvalidGroupSyntaxException;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\InvalidQuoteSyntaxException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Factory\FilterGroupFactory;
 use TypeError;
 
@@ -65,12 +67,11 @@ class FilterGroup
         foreach ($this->value as $value) {
             $callable($value[0], $value[1]);
 
-            if (true === $recursive && $value[1] instanceof FilterGroup) {
+            if (true === $recursive && $value[1] instanceof self) {
                 $value[1]->forEach($callable, $recursive);
             }
         }
     }
-
 
     /**
      * @param LogicalOperator $logicalOperator
@@ -79,7 +80,7 @@ class FilterGroup
      */
     public function add(LogicalOperator $logicalOperator, $filter): self
     {
-        if (!$filter instanceof FilterGroup && !$filter instanceof Filter) {
+        if (!$filter instanceof self && !$filter instanceof Filter) {
             throw new TypeError('Invalid filter');
         }
 
@@ -91,11 +92,16 @@ class FilterGroup
         return $this;
     }
 
+    /**
+     * @param string $filter
+     * @return static
+     * @throws InvalidGroupSyntaxException
+     * @throws InvalidQuoteSyntaxException
+     */
     public static function deserialize(string $filter): self
     {
         return FilterGroupFactory::fromString($filter);
     }
-
 
     public function serialize(): string
     {
@@ -106,7 +112,7 @@ class FilterGroup
         foreach ($this->value as $item) {
             [$logicalOperator, $filter] = $item;
 
-            $expresion = sprintf($filter instanceof FilterGroup ? '(%s)' : '%s', $filter->serialize());
+            $expresion = sprintf($filter instanceof self ? '(%s)' : '%s', $filter->serialize());
             $serialized .= ('' === $serialized ? '' : ' ' . $logicalOperator->value()) . ' ' . $expresion;
         }
 
