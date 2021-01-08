@@ -18,6 +18,21 @@ class OrderGroup
         return $this;
     }
 
+    public function count(): int
+    {
+        return count($this->orders);
+    }
+
+    public function orders(): array
+    {
+        return $this->orders;
+    }
+
+    public function get(int $index): Order
+    {
+        return $this->orders[$index];
+    }
+
     public static function deserialize(string $stringOrders): self
     {
         $orderGroup = new static();

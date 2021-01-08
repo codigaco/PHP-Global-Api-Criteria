@@ -12,6 +12,7 @@ class OrderType
     private const MAP = [
         'asc' => self::ASC,
         '+' => self::ASC,
+        '' => self::ASC,
 
         'desc' => self::DESC,
         '-' => self::DESC,
