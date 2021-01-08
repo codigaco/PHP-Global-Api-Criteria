@@ -50,7 +50,7 @@ class ComparisonOperator
     {
         $operator = strtolower($operator);
         self::validate($operator);
-        $this->value = self::MAP[$operator];
+        $this->value = $operator;
     }
 
     public static function validate(string $operator): void
