@@ -2,9 +2,9 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Shared\Domain\Exception;
 
-use Exception;
+use RuntimeException;
 
-class GlobalApiCriteriaException extends Exception
+class GlobalApiCriteriaException extends RuntimeException
 {
 
 }

@@ -2,8 +2,6 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject;
 
-use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\InvalidGroupSyntaxException;
-use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\InvalidQuoteSyntaxException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Factory\FilterGroupFactory;
 use TypeError;
 
@@ -92,12 +90,6 @@ class FilterGroup
         return $this;
     }
 
-    /**
-     * @param string $filter
-     * @return static
-     * @throws InvalidGroupSyntaxException
-     * @throws InvalidQuoteSyntaxException
-     */
     public static function deserialize(string $filter): self
     {
         return FilterGroupFactory::fromString($filter);
