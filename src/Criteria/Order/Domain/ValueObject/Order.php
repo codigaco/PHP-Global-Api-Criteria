@@ -9,10 +9,10 @@ class Order
     private $field;
     private $orderType;
 
-    public function __construct(Field $field, OrderType $orderType)
+    public function __construct(Field $field, OrderType $orderType = null)
     {
         $this->field = $field;
-        $this->orderType = $orderType;
+        $this->orderType = $orderType ?? new OrderType(OrderType::ASC);
     }
 
     public function field(): Field
@@ -20,7 +20,7 @@ class Order
         return $this->field;
     }
 
-    public function orderType(): OrderType
+    public function type(): OrderType
     {
         return $this->orderType;
     }
@@ -42,6 +42,8 @@ class Order
 
     public function serialize(): string
     {
-        return $this->field->value() . ' ' . $this->orderType->value();
+        return 1 === strlen($this->orderType->value())
+            ? $this->orderType->value() . $this->field->value()
+            : $this->field->value() . ' ' . $this->orderType->value();
     }
 }

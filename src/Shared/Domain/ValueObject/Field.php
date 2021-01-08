@@ -21,7 +21,7 @@ class Field
 
     private static function validate(string $field): void
     {
-        if (empty($field)) {
+        if (empty($field) || false !== strpos($field, ' ')) {
             throw new InvalidFieldException($field);
         }
     }

@@ -4,6 +4,7 @@ namespace QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject;
 
 
 use PHPUnit\Util\Exception;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\Exception\InvalidOrderTypeException;
 
 class OrderType
 {
@@ -22,16 +23,25 @@ class OrderType
 
     public function __construct(string $orderType)
     {
-        $orderType = self::MAP[$orderType] ?? '';
         self::validate($orderType);
         $this->value = $orderType;
     }
 
     private static function validate(string $orderType)
     {
-        if (self::ASC !== $orderType && self::DESC !== $orderType) {
-            throw new Exception('Invalid order type');
+        if (!isset(self::MAP[$orderType])) {
+            throw new InvalidOrderTypeException($orderType);
         }
+    }
+
+    public function isAsc(): bool
+    {
+        return self::MAP[$this->value] === self::ASC;
+    }
+
+    public function isDesc(): bool
+    {
+        return self::MAP[$this->value] === self::DESC;
     }
 
     public function value(): string
