@@ -37,6 +37,9 @@ class FieldTest extends TestCase
         $this->assertFalse($field->has('coordinates.latitude'));
         $this->assertFalse($field->has('location.latitude'));
         $this->assertFalse($field->has('latitude'));
+
+        $this->assertFalse($field->has('locat'));
+        $this->assertFalse($field->has('location.coord'));
     }
 
 }
