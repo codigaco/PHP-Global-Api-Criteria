@@ -9,7 +9,7 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderType;
 class OrderTypeTest extends TestCase
 {
     /** @test */
-    public function instances()
+    public function instances(): void
     {
         self::assertTrue((new OrderType('asc'))->isAsc());
         self::assertTrue((new OrderType('+'))->isAsc());
@@ -17,9 +17,8 @@ class OrderTypeTest extends TestCase
         self::assertTrue((new OrderType('-'))->isDesc());
     }
 
-
     /** @test */
-    public function invalid_instances()
+    public function invalid_instances(): void
     {
         $this->expectException(InvalidOrderTypeException::class);
         new OrderType('top');
