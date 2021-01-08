@@ -2,8 +2,6 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject;
 
-use PHPUnit\Util\Exception;
-
 class Offset
 {
     private $value;
@@ -17,7 +15,7 @@ class Offset
     public static function validate(int $offset): void
     {
         if (0 > $offset) {
-            throw new Exception('Invalid offset');
+            throw new \Exception('Invalid offset');
         }
     }
 

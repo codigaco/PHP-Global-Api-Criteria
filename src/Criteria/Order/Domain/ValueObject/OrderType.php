@@ -2,8 +2,6 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject;
 
-
-use PHPUnit\Util\Exception;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\Exception\InvalidOrderTypeException;
 
 class OrderType
