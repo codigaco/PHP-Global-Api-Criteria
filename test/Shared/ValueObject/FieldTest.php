@@ -8,7 +8,6 @@ use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Field;
 
 class FieldTest extends TestCase
 {
-
     /** @test */
     public function validate(): void
     {
@@ -30,16 +29,16 @@ class FieldTest extends TestCase
     {
         $field = new Field('location.coordinates.latitude');
 
-        $this->assertTrue($field->has('location'));
-        $this->assertTrue($field->has('location.coordinates'));
-        $this->assertTrue($field->has('location.coordinates.latitude'));
+        self::assertTrue($field->has('location'));
+        self::assertTrue($field->has('location.coordinates'));
+        self::assertTrue($field->has('location.coordinates.latitude'));
 
-        $this->assertFalse($field->has('coordinates.latitude'));
-        $this->assertFalse($field->has('location.latitude'));
-        $this->assertFalse($field->has('latitude'));
+        self::assertFalse($field->has('coordinates.latitude'));
+        self::assertFalse($field->has('location.latitude'));
+        self::assertFalse($field->has('latitude'));
 
-        $this->assertFalse($field->has('locat'));
-        $this->assertFalse($field->has('location.coord'));
+        self::assertFalse($field->has('locat'));
+        self::assertFalse($field->has('location.coord'));
     }
 
 }

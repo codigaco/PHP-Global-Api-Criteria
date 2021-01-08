@@ -2,8 +2,6 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject;
 
-use PHPUnit\Util\Exception;
-
 class Limit
 {
     private $value;
@@ -16,7 +14,7 @@ class Limit
     public static function validate(int $limit): void
     {
         if (0 > $limit) {
-            throw new Exception('Invalid limit');
+            throw new \Exception('Invalid limit');
         }
     }
 
