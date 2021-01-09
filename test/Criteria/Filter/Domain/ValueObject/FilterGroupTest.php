@@ -23,7 +23,7 @@ class FilterGroupTest extends TestCase
     /** @test */
     public function deserialize(): void
     {
-        $filterText = "priority = true or (stock gt 1000 or (price > 50 and price < 100) and name != null and (city in Madrid, Valencia, 'New York' or city like bee))";
+        $filterText = "priority = true OR (stock gt 1000 || (price > 50 and price < 100) AND name != null && (city in Madrid, Valencia, 'New York' or city like bee))";
         $rootFilterGroup = FilterGroup::deserialize($filterText);
 
         /** @var $filter Filter|FilterGroup */
