@@ -2,7 +2,6 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject;
 
-use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\LogicalOperatorNotDefinedException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\LogicalOperatorViolationException;
 
 abstract class BaseFilter

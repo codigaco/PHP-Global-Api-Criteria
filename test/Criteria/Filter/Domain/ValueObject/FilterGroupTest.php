@@ -105,10 +105,10 @@ class FilterGroupTest extends TestCase
     /** @test */
     public function building(): void
     {
-        $filterText = "priority = true or (stock gt 1000 or (price > 50 and price < 100) and name != null and (city in Madrid, Valencia, 'New York' or city like bee))";
+        $filterText = "priority = false or (stock gt 1000 or (price > 50 and price < 100) and name != null and (city in Madrid, Valencia, 'New York' or city like bee))";
 
         $filterGroup = FilterGroup::create()
-            ->and(new Filter(new Field('priority'), new ComparisonOperator('='), new Value('true')))
+            ->and(new Filter(new Field('priority'), new ComparisonOperator('='), new Value('false')))
             ->or(FilterGroup::create()
                 ->and(new Filter(new Field('stock'), new ComparisonOperator('gt'), new Value('1000')))
                 ->or(FilterGroup::create()

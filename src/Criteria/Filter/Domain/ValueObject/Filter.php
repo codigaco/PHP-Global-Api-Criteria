@@ -2,7 +2,6 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject;
 
-use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\LogicalOperatorViolationException;
 use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Field;
 use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Value;
 
@@ -11,7 +10,6 @@ class Filter extends BaseFilter
     private $field;
     private $operator;
     private $value;
-    private $logicalOperator;
 
     public function __construct(Field $field, ComparisonOperator $operator, Value $value)
     {
