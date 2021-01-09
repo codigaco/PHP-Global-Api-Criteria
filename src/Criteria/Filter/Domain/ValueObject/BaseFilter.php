@@ -10,9 +10,6 @@ abstract class BaseFilter
 
     public function logicalOperator(): LogicalOperator
     {
-//        if (null === $this->logicalOperator()) {
-//            throw new LogicalOperatorNotDefinedException('LogicalOperator is null');
-//        }
         return $this->logicalOperator ?? LogicalOperator::and();
     }
 
