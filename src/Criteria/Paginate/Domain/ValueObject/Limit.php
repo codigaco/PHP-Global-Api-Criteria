@@ -2,19 +2,22 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject;
 
+use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\Exception\InvalidLimitException;
+
 class Limit
 {
     private $value;
 
     public function __construct(int $limit)
     {
+        self::validate($limit);
         $this->value = $limit;
     }
 
     public static function validate(int $limit): void
     {
         if (0 > $limit) {
-            throw new \Exception('Invalid limit');
+            throw new InvalidLimitException($limit);
         }
     }
 
