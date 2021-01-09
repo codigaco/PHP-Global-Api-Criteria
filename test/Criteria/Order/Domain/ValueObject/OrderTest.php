@@ -45,6 +45,10 @@ class OrderTest extends TestCase
     /** @test */
     public function serialize(): void
     {
+        $orderString = 'name';
+        self::assertEquals($orderString, Order::deserialize($orderString)->serialize());
+        self::assertEquals($orderString, (new Order(new Field('name'), new OrderType('')))->serialize());
+
         $orderString = '+name';
         self::assertEquals($orderString, Order::deserialize($orderString)->serialize());
         self::assertEquals($orderString, (new Order(new Field('name'), new OrderType('+')))->serialize());
@@ -55,7 +59,6 @@ class OrderTest extends TestCase
 
         $orderString = 'name asc';
         self::assertEquals($orderString, Order::deserialize($orderString)->serialize());
-        self::assertEquals($orderString, (new Order(new Field('name')))->serialize());
         self::assertEquals($orderString, (new Order(new Field('name'), new OrderType('asc')))->serialize());
 
         $orderString = 'name desc';
