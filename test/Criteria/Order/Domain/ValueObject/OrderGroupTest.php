@@ -4,8 +4,11 @@ namespace QuiqueGilB\GlobalApiCriteria\Test\Criteria\Order\Domain\ValueObject;
 
 use PHPUnit\Framework\TestCase;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\Exception\InvalidOrderTypeException;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\Order;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderGroup;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderType;
 use QuiqueGilB\GlobalApiCriteria\Shared\Domain\Exception\InvalidFieldException;
+use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Field;
 
 class OrderGroupTest extends TestCase
 {
@@ -60,5 +63,24 @@ class OrderGroupTest extends TestCase
         $orderString = 'age desc, name, -lastName';
         $orderGroup = OrderGroup::deserialize($orderString);
         self::assertEquals('age desc,name,-lastName', $orderGroup->serialize());
+    }
+
+    /** @test */
+    public function building():void
+    {
+        $orderGroup = OrderGroup::create()
+            ->add(new Order(new Field('aField'), new OrderType('asc')))
+            ->add(new Order(new Field('otherField'), new OrderType('desc')))
+            ->add(new Order(new Field('name')))
+        ;
+
+        self::assertEquals(3, $orderGroup->count());
+        self::assertEquals('aField', $orderGroup->get(0)->field()->value());
+        self::assertEquals('asc', $orderGroup->get(0)->type()->value());
+        self::assertEquals('otherField', $orderGroup->get(1)->field()->value());
+        self::assertEquals('desc', $orderGroup->get(1)->type()->value());
+        self::assertEquals('name', $orderGroup->get(2)->field()->value());
+        self::assertEquals('', $orderGroup->get(2)->type()->value());
+
     }
 }

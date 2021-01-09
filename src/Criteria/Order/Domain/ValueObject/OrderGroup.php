@@ -12,7 +12,7 @@ class OrderGroup
         $this->orders = [];
     }
 
-    private function add(Order $order): self
+    public function add(Order $order): self
     {
         $this->orders[] = $order;
         return $this;

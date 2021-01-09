@@ -12,7 +12,7 @@ class Order
     public function __construct(Field $field, OrderType $orderType = null)
     {
         $this->field = $field;
-        $this->orderType = $orderType ?? new OrderType(OrderType::ASC);
+        $this->orderType = $orderType ?? new OrderType('');
     }
 
     public function field(): Field
