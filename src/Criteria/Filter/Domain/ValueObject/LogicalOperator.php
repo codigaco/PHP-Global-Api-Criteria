@@ -63,8 +63,8 @@ class LogicalOperator
         return self::MAP[$this->value] === self:: OR;
     }
 
-    public static function acceptedValues(): array
+    public static function regex(): string
     {
-        return array_keys(self::MAP);
+        return '/^(and|or|&&|\|\|)$/i';
     }
 }

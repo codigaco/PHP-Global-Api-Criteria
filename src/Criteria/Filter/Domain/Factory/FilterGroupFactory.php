@@ -21,7 +21,6 @@ class FilterGroupFactory
     {
         $filterGroup = FilterGroup::create();
         $length = strlen($filter);
-        $logicalOperators = LogicalOperator::acceptedValues();
 
         $charQuoted = null;
         $level = 0;
@@ -47,7 +46,6 @@ class FilterGroupFactory
 
             if ('(' === $char) {
                 $level++;
-                continue;
             }
 
             if (')' === $char) {
@@ -62,7 +60,7 @@ class FilterGroupFactory
                 $splitTo = $length;
             } elseif (' ' === $char) {
                 $word = trim(substr($filter, $lastSpace, $i - $lastSpace));
-                if (in_array(strtolower($word), $logicalOperators, true)) {
+                if (preg_match(LogicalOperator::regex(), $word)) {
                     $splitTo = $lastSpace;
                 }
                 $lastSpace = $i;
