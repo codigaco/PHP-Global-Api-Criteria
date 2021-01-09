@@ -11,19 +11,19 @@ class QueryMetadata
     private $total;
     private $items;
 
-    public function __construct(int $offset, int $limit, int $total, int $items)
+    public function __construct(int $offset, int $limit, int $total)
     {
-        self::validate($offset, $limit, $total, $items);
+        self::validate($offset, $limit, $total);
         $this->offset = $offset;
         $this->limit = $limit;
         $this->total = $total;
-        $this->items = $items;
+        $this->items = $offset + $limit > $total ? $total - $offset : $limit;
     }
 
-    public static function validate(int $offset, int $limit, int $total, int $items): void
+    public static function validate(int $offset, int $limit, int $total): void
     {
-        if ($offset < 0 || $limit < 0 || $total < 0 || $items < 0) {
-            throw new InvalidQueryMetadataException("$offset, $limit, $total, $items");
+        if ($offset < 0 || $limit < 0 || $total < 0) {
+            throw new InvalidQueryMetadataException("$offset, $limit, $total");
         }
     }
 

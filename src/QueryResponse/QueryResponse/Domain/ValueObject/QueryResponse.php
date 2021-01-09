@@ -2,7 +2,7 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\QueryResponse\QueryResponse\Domain\ValueObject;
 
-use QuiqueGilB\GlobalApiCriteria\QueryResponse\Content\Domain\ValueObject\QueryData;
+use QuiqueGilB\GlobalApiCriteria\QueryResponse\Data\Domain\ValueObject\QueryData;
 use QuiqueGilB\GlobalApiCriteria\QueryResponse\Metadata\Domain\ValueObject\QueryMetadata;
 
 class QueryResponse
