@@ -44,7 +44,7 @@ class FilterGroup extends BaseFilter
 
     public function hasOnlyOne(): bool
     {
-        return count($this->value) === 1;
+        return count($this->value) === 1 && $this->value[0] instanceof Filter;
     }
 
     public function add(LogicalOperator $logicalOperator, BaseFilter $filter): self

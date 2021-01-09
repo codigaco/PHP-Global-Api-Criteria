@@ -12,6 +12,13 @@ use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Value;
 class FilterGroupTest extends TestCase
 {
     /** @test */
+    public function assert_has_only_one(): void
+    {
+        self::assertTrue(FilterGroup::deserialize('a = b')->hasOnlyOne());
+        self::assertFalse(FilterGroup::deserialize('a = b and c = d')->hasOnlyOne());
+    }
+
+    /** @test */
     public function serialize(): void
     {
         $filterText = "priority = true or (stock gt 1000 or (price > 50 and price < 100) and name != null and (city in Madrid, Valencia, 'New York' or city like bee))";
@@ -117,7 +124,9 @@ class FilterGroupTest extends TestCase
                 )
                 ->and(new Filter(new Field('name'), new ComparisonOperator('!='), new Value('null')))
                 ->and(FilterGroup::create()
-                    ->and(new Filter(new Field('city'), new ComparisonOperator('in'), new Value("Madrid, Valencia, 'New York'")))
+                    ->and(new Filter(new Field('city'),
+                        new ComparisonOperator('in'),
+                        new Value("Madrid, Valencia, 'New York'")))
                     ->or(new Filter(new Field('city'), new ComparisonOperator('like'), new Value('bee')))
                 )
             );

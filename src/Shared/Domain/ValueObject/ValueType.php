@@ -2,6 +2,7 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject;
 
+use QuiqueGilB\GlobalApiCriteria\Shared\Domain\Exception\InvalidValueTypeException;
 use QuiqueGilB\GlobalApiCriteria\Shared\Domain\Helper\StringHelper;
 
 class ValueType
@@ -17,7 +18,27 @@ class ValueType
 
     public function __construct(string $type)
     {
+        self::validate($type);
         $this->value = $type;
+    }
+
+    public static function acceptedValues(): array
+    {
+        return [
+            self::TYPE_STRING,
+            self::TYPE_INT,
+            self::TYPE_DECIMAL,
+            self::TYPE_ARRAY,
+            self::TYPE_NULL,
+            self::TYPE_BOOLEAN
+        ];
+    }
+
+    private static function validate(string $type): void
+    {
+        if (!in_array($type, self::acceptedValues())) {
+            throw new InvalidValueTypeException($type);
+        }
     }
 
     public function isString(): bool

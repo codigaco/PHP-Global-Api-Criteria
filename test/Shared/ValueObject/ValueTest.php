@@ -8,6 +8,18 @@ use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Value;
 class ValueTest extends TestCase
 {
     /** @test */
+    public function assert_types():void
+    {
+        self::assertTrue((new Value('null'))->type()->isNull());
+        self::assertTrue((new Value('abcd'))->type()->isString());
+        self::assertTrue((new Value('true'))->type()->isBoolean());
+        self::assertTrue((new Value('"true"'))->type()->isString());
+        self::assertTrue((new Value('false'))->type()->isBoolean());
+        self::assertTrue((new Value('1234'))->type()->isInt());
+        self::assertTrue((new Value('123.4'))->type()->isDecimal());
+    }
+
+    /** @test */
     public function value(): void
     {
         self::assertEquals('null', Value::deserialize('null')->value());

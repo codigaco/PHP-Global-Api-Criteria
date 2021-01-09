@@ -13,6 +13,12 @@ use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Field;
 class OrderGroupTest extends TestCase
 {
     /** @test */
+    public function has_orders(): void
+    {
+        self::assertCount(1, OrderGroup::deserialize('name')->orders());
+    }
+
+    /** @test */
     public function invalid_instances(): void
     {
         $this->expectException(InvalidFieldException::class);
@@ -66,13 +72,12 @@ class OrderGroupTest extends TestCase
     }
 
     /** @test */
-    public function building():void
+    public function building(): void
     {
         $orderGroup = OrderGroup::create()
             ->add(new Order(new Field('aField'), new OrderType('asc')))
             ->add(new Order(new Field('otherField'), new OrderType('desc')))
-            ->add(new Order(new Field('name')))
-        ;
+            ->add(new Order(new Field('name')));
 
         self::assertEquals(3, $orderGroup->count());
         self::assertEquals('aField', $orderGroup->get(0)->field()->value());

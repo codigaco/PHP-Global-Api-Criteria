@@ -17,7 +17,7 @@ class QueryMetadata
         $this->offset = $offset;
         $this->limit = $limit;
         $this->total = $total;
-        $this->items = $offset + $limit > $total ? $total - $offset : $limit;
+        $this->items = $this->calculateItems();
     }
 
     public static function validate(int $offset, int $limit, int $total): void
@@ -25,6 +25,23 @@ class QueryMetadata
         if ($offset < 0 || $limit < 0 || $total < 0) {
             throw new InvalidQueryMetadataException("$offset, $limit, $total");
         }
+    }
+
+    private function calculateItems(): int
+    {
+        if (0 === $this->offset) {
+            return min($this->limit, $this->total);
+        }
+
+        if (0 === $this->limit) {
+            return $this->total - $this->offset;
+        }
+
+        $items = $this->offset + $this->limit > $this->total
+            ? $this->total - $this->offset
+            : $this->limit;
+
+        return $items < 0 ? 0 : $items;
     }
 
     public function offset(): int
