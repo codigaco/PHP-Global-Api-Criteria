@@ -3,15 +3,21 @@
 namespace QuiqueGilB\GlobalApiCriteria\Test\Criteria\Filter\Domain\ValueObject;
 
 use PHPUnit\Framework\TestCase;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\ComparisonOperator;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
+use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Field;
+use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Value;
 
 class FilterGroupTest extends TestCase
 {
     /** @test */
     public function serialize(): void
     {
+        $filterText = "priority = true or (stock gt 1000 or (price > 50 and price < 100) and name != null and (city in Madrid, Valencia, 'New York' or city like bee))";
+        $rootFilterGroup = FilterGroup::deserialize($filterText);
 
+        self::assertEquals($filterText, $rootFilterGroup->serialize());
     }
 
     /** @test */
@@ -99,6 +105,24 @@ class FilterGroupTest extends TestCase
     /** @test */
     public function building(): void
     {
+        $filterText = "priority = true or (stock gt 1000 or (price > 50 and price < 100) and name != null and (city in Madrid, Valencia, 'New York' or city like bee))";
+
+        $filterGroup = FilterGroup::create()
+            ->and(new Filter(new Field('priority'), new ComparisonOperator('='), new Value('true')))
+            ->or(FilterGroup::create()
+                ->and(new Filter(new Field('stock'), new ComparisonOperator('gt'), new Value('1000')))
+                ->or(FilterGroup::create()
+                    ->and(new Filter(new Field('price'), new ComparisonOperator('>'), new Value('50')))
+                    ->and(new Filter(new Field('price'), new ComparisonOperator('<'), new Value('100')))
+                )
+                ->and(new Filter(new Field('name'), new ComparisonOperator('!='), new Value('null')))
+                ->and(FilterGroup::create()
+                    ->and(new Filter(new Field('city'), new ComparisonOperator('in'), new Value("Madrid, Valencia, 'New York'")))
+                    ->or(new Filter(new Field('city'), new ComparisonOperator('like'), new Value('bee')))
+                )
+            );
+
+        self::assertEquals($filterText, $filterGroup->serialize());
 
     }
 
