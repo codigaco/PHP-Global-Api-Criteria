@@ -25,6 +25,10 @@ class OrderTest extends TestCase
     /** @test */
     public function deserialize(): void
     {
+        $order = Order::deserialize('name');
+        self::assertEquals('name', $order->field()->value());
+        self::assertTrue($order->type()->isAsc());
+
         $order = Order::deserialize('+name');
         self::assertEquals('name', $order->field()->value());
         self::assertTrue($order->type()->isAsc());
