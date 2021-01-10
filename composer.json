@@ -13,7 +13,8 @@
   "autoload": {
     "psr-4": {
       "QuiqueGilB\\GlobalApiCriteria\\": "src/",
-      "QuiqueGilB\\GlobalApiCriteria\\Test\\": "test/"
+      "QuiqueGilB\\GlobalApiCriteria\\Test\\": "test/",
+      "QuiqueGilB\\GlobalApiCriteria\\Example\\": "example/"
     }
   },
   "require-dev": {
