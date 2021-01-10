@@ -13,11 +13,15 @@ class FieldCriteriaRulesGroupTest extends TestCase
     public function assert_invalid_instances(): void
     {
         $this->expectException(FieldCriteriaRulesRepeatException::class);
+        $this->expectExceptionMessage('name, email');
+
         new FieldCriteriaRulesGroup(
             FieldCriteriaRules::create('id'),
             FieldCriteriaRules::create('name'),
             FieldCriteriaRules::create('email'),
-            FieldCriteriaRules::create('name')
+            FieldCriteriaRules::create('name'),
+            FieldCriteriaRules::create('lastname'),
+            FieldCriteriaRules::create('email'),
         );
     }
 
