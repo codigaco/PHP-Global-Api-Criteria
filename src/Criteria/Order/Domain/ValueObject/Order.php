@@ -31,14 +31,14 @@ class Order
         $firstChart = $order[0];
 
         if ('-' === $firstChart || '+' === $firstChart) {
-            return new self(
+            return new static(
                 new Field(substr($order, 1)),
                 new OrderType($firstChart)
             );
         }
 
         $orderParts = explode(' ', $order);
-        return new self(
+        return new static(
             new Field($orderParts[0]),
             new OrderType($orderParts[1] ?? '')
         );

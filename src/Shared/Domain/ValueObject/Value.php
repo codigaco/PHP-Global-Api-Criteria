@@ -57,7 +57,7 @@ class Value
 
     public static function deserialize(string $value): self
     {
-        return new self($value);
+        return new static($value);
     }
 
     public function serialize(): string

@@ -80,25 +80,25 @@ class ValueType
     public static function fromValue(string $value): self
     {
         if ('null' === $value) {
-            return new self(self::TYPE_NULL);
+            return new static(self::TYPE_NULL);
         }
 
         if (is_numeric($value)) {
             if (strpos($value, '.')) {
-                return new self(self::TYPE_DECIMAL);
+                return new static(self::TYPE_DECIMAL);
             }
-            return new self(self::TYPE_INT);
+            return new static(self::TYPE_INT);
         }
 
         if ('false' === $value || 'true' === $value) {
-            return new self(self::TYPE_BOOLEAN);
+            return new static(self::TYPE_BOOLEAN);
         }
 
         $parts = StringHelper::split($value);
         if (1 < count($parts)) {
-            return new self(self::TYPE_ARRAY);
+            return new static(self::TYPE_ARRAY);
         }
 
-        return new self(self::TYPE_STRING);
+        return new static(self::TYPE_STRING);
     }
 }
