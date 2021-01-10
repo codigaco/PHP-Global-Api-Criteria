@@ -17,6 +17,9 @@ class Criteria
     /** @var Paginate|null */
     private $paginate;
 
+    /** @var FieldCriteriaRules[] */
+    private static $rules;
+
     private function __construct(
         FilterGroup $filterGroup = null,
         OrderGroup $orderGroup = null,
@@ -25,6 +28,11 @@ class Criteria
         $this->filterGroup = $filterGroup;
         $this->orderGroup = $orderGroup;
         $this->paginate = $paginate;
+    }
+
+    public static function create(): self
+    {
+        return new static();
     }
 
     public function withFilter(FilterGroup $filterGroup): self
@@ -45,11 +53,6 @@ class Criteria
         return $this;
     }
 
-    public static function create(): self
-    {
-        return new static();
-    }
-
     public function filters(): ?FilterGroup
     {
         return $this->filterGroup;
@@ -63,5 +66,19 @@ class Criteria
     public function paginate(): ?Paginate
     {
         return $this->paginate;
+    }
+
+    protected static function createRules(): array
+    {
+        return [];
+    }
+
+    public static function rules(): array
+    {
+        if (null === self::$rules) {
+            self::$rules = self::createRules();
+        }
+
+        return self::$rules;
     }
 }
