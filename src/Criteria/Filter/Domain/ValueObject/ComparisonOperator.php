@@ -109,4 +109,44 @@ class ComparisonOperator
     {
         return self::MAP[$this->value] === self::LIKE;
     }
+
+    public static function equal(): self
+    {
+        return new static(self::EQUAL);
+    }
+
+    public static function notEqual(): self
+    {
+        return new static(self::NOT_EQUAL);
+    }
+
+    public static function greater(): self
+    {
+        return new static(self::GREATER);
+    }
+
+    public static function greaterOrEqual(): self
+    {
+        return new static(self::GREATER_OR_EQUAL);
+    }
+
+    public static function less(): self
+    {
+        return new static(self::LESS);
+    }
+
+    public static function lessOrEqual(): self
+    {
+        return new static(self::LESS_OR_EQUAL);
+    }
+
+    public static function in(): self
+    {
+        return new static(self::IN);
+    }
+
+    public static function like(): self
+    {
+        return new static(self::LIKE);
+    }
 }

@@ -2,33 +2,63 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject;
 
+use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject\Paginate;
 
 class Criteria
 {
-    /** @var FilterGroup|null */
+    private static $rulesGroup;
+
     private $filterGroup;
-
-    /** @var OrderGroup|null */
     private $orderGroup;
-
-    /** @var Paginate|null */
     private $paginate;
-
-    /** @var FieldCriteriaRules[] */
-    private static $rules;
 
     private function __construct(
         FilterGroup $filterGroup = null,
         OrderGroup $orderGroup = null,
         Paginate $paginate = null
     ) {
+        self::validate($filterGroup, $orderGroup);
+
         $this->filterGroup = $filterGroup;
         $this->orderGroup = $orderGroup;
         $this->paginate = $paginate;
     }
+
+    public static function validate(?FilterGroup $filterGroup, ?OrderGroup $orderGroup): void
+    {
+        self::assertRulesFilterGroup($filterGroup);
+        self::assertRulesOrderGroup($orderGroup);
+    }
+
+    private static function assertRulesFilterGroup(?FilterGroup $filterGroup): void
+    {
+        if (null === $filterGroup) {
+            return;
+        }
+
+        /** @var Filter|FilterGroup $filter */
+        foreach ($filterGroup->filters() as $filter) {
+            if ($filter instanceof FilterGroup) {
+                self::assertRulesFilterGroup($filter);
+                continue;
+            }
+
+
+
+        }
+    }
+
+    private static function assertRulesOrderGroup(?OrderGroup $orderGroup): void
+    {
+        if (null === $orderGroup) {
+            return;
+        }
+
+    }
+
 
     public static function create(): self
     {
@@ -37,12 +67,14 @@ class Criteria
 
     public function withFilter(FilterGroup $filterGroup): self
     {
+        self::assertRulesFilterGroup($filterGroup);
         $this->filterGroup = $filterGroup;
         return $this;
     }
 
     public function withOrder(OrderGroup $orderGroup): self
     {
+        self::assertRulesOrderGroup($orderGroup);
         $this->orderGroup = $orderGroup;
         return $this;
     }
@@ -73,12 +105,12 @@ class Criteria
         return [];
     }
 
-    public static function rules(): array
+    public static function rulesGroup(): array
     {
-        if (null === self::$rules) {
-            self::$rules = self::createRules();
+        if (null === self::$rulesGroup) {
+            self::$rulesGroup = new FieldCriteriaRulesGroup(self::createRules());
         }
 
-        return self::$rules;
+        return self::$rulesGroup->rules();
     }
 }

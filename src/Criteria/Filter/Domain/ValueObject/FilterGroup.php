@@ -14,6 +14,11 @@ class FilterGroup extends BaseFilter
         $this->value = [];
     }
 
+    public function filters(): array
+    {
+        return $this->value;
+    }
+
     public static function create(BaseFilter $filter = null): self
     {
         $instance = new static();
