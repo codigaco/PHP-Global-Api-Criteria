@@ -1,6 +1,6 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Test\QueryResponse\Domain\Metadata\ValueObject;
+namespace QuiqueGilB\GlobalApiCriteria\Test\QueryResponse\Metadata\Domain\ValueObject;
 
 use PHPUnit\Framework\TestCase;
 use QuiqueGilB\GlobalApiCriteria\QueryResponse\Metadata\Domain\ValueObject\QueryMetadata;
@@ -17,6 +17,9 @@ class QueryMetadataTest extends TestCase
         self::assertEquals(10, $metadata->items());
 
         $metadata = new QueryMetadata(300, 20, 200);
+        self::assertEquals(0, $metadata->items());
+
+        $metadata = new QueryMetadata(300, 0, 200);
         self::assertEquals(0, $metadata->items());
 
         $metadata = new QueryMetadata(0, 20, 200);

@@ -20,6 +20,11 @@ class QueryMetadata
         $this->items = $this->calculateItems();
     }
 
+    public static function create(int $offset, int $limit, int $total): self
+    {
+        return new static($offset, $limit, $total);
+    }
+
     public static function validate(int $offset, int $limit, int $total): void
     {
         if ($offset < 0 || $limit < 0 || $total < 0) {
@@ -29,19 +34,8 @@ class QueryMetadata
 
     private function calculateItems(): int
     {
-        if (0 === $this->offset) {
-            return min($this->limit, $this->total);
-        }
-
-        if (0 === $this->limit) {
-            return $this->total - $this->offset;
-        }
-
-        $items = $this->offset + $this->limit > $this->total
-            ? $this->total - $this->offset
-            : $this->limit;
-
-        return $items < 0 ? 0 : $items;
+        $items = max($this->total, $this->offset) - $this->offset;
+        return 0 === $this->limit ? $items : min($items, $this->limit);
     }
 
     public function offset(): int
