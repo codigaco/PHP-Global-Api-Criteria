@@ -25,4 +25,9 @@ class Limit
     {
         return $this->value;
     }
+
+    public function isZero(): bool
+    {
+        return 0 === $this->value;
+    }
 }
