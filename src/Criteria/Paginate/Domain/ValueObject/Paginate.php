@@ -45,10 +45,10 @@ class Paginate
 
     public static function deserialize(string $pagination): self
     {
-        $pagination = explode(',', $pagination);
+        $paginationSplit = explode(",", $pagination);
 
-        $offset = (int)trim($pagination[0] ?? 0);
-        $limit = (int)trim($pagination[1] ?? 0);
+        $offset = (int)trim($paginationSplit[0] ?? 0);
+        $limit = (int)trim($paginationSplit[1] ?? 0);
 
         return new static(new Offset($offset), new Limit($limit));
     }
