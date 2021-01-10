@@ -27,7 +27,6 @@ class QueryResponse
         }
 
         if ($metadata->items() !== $expectedItems) {
-            dump($metadata->items(), $expectedItems);
             throw new InvalidQueryResponseException("unexpected items");
         }
 
