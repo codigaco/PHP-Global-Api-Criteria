@@ -3,7 +3,6 @@
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject;
 
 use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\Exception\FieldCriteriaRulesRepeatException;
-use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\Exception\FieldCriteriaRuleViolationException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\Exception\InvalidFieldCriteriaRuleForAssertFieldException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\BaseFilter;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
