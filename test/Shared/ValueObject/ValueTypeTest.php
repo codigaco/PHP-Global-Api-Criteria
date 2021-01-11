@@ -3,8 +3,8 @@
 namespace QuiqueGilB\GlobalApiCriteria\Test\Shared\ValueObject;
 
 use PHPUnit\Framework\TestCase;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\Exception\InvalidValueTypeException;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\ValueType;
+use QuiqueGilB\GlobalApiCriteria\Shared\Value\Domain\Exception\InvalidValueTypeException;
+use QuiqueGilB\GlobalApiCriteria\Shared\Value\Domain\ValueObject\ValueType;
 
 class ValueTypeTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject;
+namespace QuiqueGilB\GlobalApiCriteria\Shared\Value\Domain\ValueObject;
 
 use QuiqueGilB\GlobalApiCriteria\Shared\Utils\Domain\Helper\StringHelper;
 

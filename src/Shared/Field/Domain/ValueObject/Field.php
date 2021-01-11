@@ -1,8 +1,8 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject;
+namespace QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\ValueObject;
 
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\Exception\InvalidFieldException;
+use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\Exception\InvalidFieldException;
 
 class Field
 {

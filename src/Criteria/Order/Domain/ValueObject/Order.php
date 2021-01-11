@@ -2,7 +2,7 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject;
 
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Field;
+use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\ValueObject\Field;
 
 class Order
 {

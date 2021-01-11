@@ -5,8 +5,8 @@ namespace QuiqueGilB\GlobalApiCriteria\Test\Criteria\Filter\Domain\ValueObject;
 use PHPUnit\Framework\TestCase;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\ComparisonOperator;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Field;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Value;
+use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\ValueObject\Field;
+use QuiqueGilB\GlobalApiCriteria\Shared\Value\Domain\ValueObject\Value;
 
 class FilterTest extends TestCase
 {

@@ -3,7 +3,7 @@
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject;
 
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\ComparisonOperator;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Field;
+use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\ValueObject\Field;
 
 class FieldCriteriaRules
 {

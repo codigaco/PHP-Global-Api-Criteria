@@ -1,8 +1,8 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject;
+namespace QuiqueGilB\GlobalApiCriteria\Shared\Value\Domain\ValueObject;
 
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\Exception\InvalidValueTypeException;
+use QuiqueGilB\GlobalApiCriteria\Shared\Value\Domain\Exception\InvalidValueTypeException;
 use QuiqueGilB\GlobalApiCriteria\Shared\Utils\Domain\Helper\StringHelper;
 
 class ValueType

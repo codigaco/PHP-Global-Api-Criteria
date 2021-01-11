@@ -7,8 +7,8 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\Exception\InvalidOrderTyp
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\Order;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderType;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\Exception\InvalidFieldException;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Field;
+use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\Exception\InvalidFieldException;
+use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\ValueObject\Field;
 
 class OrderGroupTest extends TestCase
 {

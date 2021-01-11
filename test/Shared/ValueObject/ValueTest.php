@@ -3,7 +3,7 @@
 namespace QuiqueGilB\GlobalApiCriteria\Test\Shared\ValueObject;
 
 use PHPUnit\Framework\TestCase;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Value;
+use QuiqueGilB\GlobalApiCriteria\Shared\Value\Domain\ValueObject\Value;
 
 class ValueTest extends TestCase
 {

@@ -3,8 +3,8 @@
 namespace QuiqueGilB\GlobalApiCriteria\Test\Shared\ValueObject;
 
 use PHPUnit\Framework\TestCase;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\Exception\InvalidFieldException;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject\Field;
+use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\Exception\InvalidFieldException;
+use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\ValueObject\Field;
 
 class FieldTest extends TestCase
 {
