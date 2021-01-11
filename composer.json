@@ -1,6 +1,10 @@
 {
   "name": "quiquegilb/global-api-criteria",
   "version": "0.0.1",
+  "description": "Global criteria php",
+  "keywords": ["criteria","api criteria", "doctrine", "eloquent", "array"],
+  "homepage": "https://github.com/QuiqueGilB/Global-Api-Criteria",
+  "license": "MIT",
   "authors": [
     {
       "name": "Enrique Gil",
