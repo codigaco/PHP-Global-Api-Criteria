@@ -27,13 +27,13 @@ class FieldTest extends TestCase
     /** @test */
     public function has_field(): void
     {
-        $field = new Field('location.coordinates.latitude');
+        $field = new Field('location.coordinates');
 
         self::assertTrue($field->has('location'));
         self::assertTrue($field->has('location.coordinates'));
         self::assertTrue($field->has('location.coordinates.latitude'));
 
-        self::assertFalse($field->has('coordinates.latitude'));
+        self::assertFalse($field->has('coordinates'));
         self::assertFalse($field->has('location.latitude'));
         self::assertFalse($field->has('latitude'));
 

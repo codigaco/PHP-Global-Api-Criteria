@@ -37,6 +37,9 @@ class Field
 
     public function has(string $field): bool
     {
-        return 0 === strpos($this->value . '.', $field . '.');
+        $shortField = strlen($field) < strlen($this->value) ? $field : $this->value;
+        $longField = $shortField === $field ? $this->value : $field;
+
+        return 0 === strpos($longField . '.', $shortField . '.');
     }
 }
