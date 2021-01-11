@@ -1,9 +1,34 @@
 # Global-Api-Criteria
 
-**Example:**
-`
-$productCriteria = ProductCriteriaExample::create()
+## Installation
+Use the package manager [composer](https://getcomposer.org/download/) to install Global Api Criteria.
+
+```bash
+composer require quiquegilb/global-api-criteria
+```
+
+## Usage
+Simple usage.
+```php
+$criteria = Criteria::create()
      ->withFilter(FilterGroup::deserialize('(name like computer or name like pc) and price > 500 and price <= 1000'))
-     ->withOrder(OrderGroup::deserialize('price asc, stock desc'))
+     ->withOrder(OrderGroup::deserialize('+price, stock desc'))
      ->withPaginate(Paginate::create(0, 5));
-`
+```
+
+## Custom and security usage
+View [ProductCriteriaExample](https://github.com/QuiqueGilB/Global-Api-Criteria/blob/main/example/Product/Product/Domain/Criteria/ProductCriteriaExample.php) for more details.
+```php
+$criteria = ProducCriteriaExample::create()
+     ->withFilter(FilterGroup::deserialize('(name like computer or name like pc) and price > 500 and price <= 1000'))
+     ->withOrder(OrderGroup::deserialize('+price, stock desc'))
+     ->withPaginate(Paginate::create(0, 5));
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
