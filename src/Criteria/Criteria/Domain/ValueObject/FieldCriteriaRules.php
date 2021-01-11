@@ -2,8 +2,13 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject;
 
+use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\Exception\FieldCriteriaRuleViolationException;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\Exception\InvalidFieldCriteriaRuleForAssertFieldException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\ComparisonOperator;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\Order;
 use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\ValueObject\Field;
+use RuntimeException;
 
 class FieldCriteriaRules
 {
@@ -58,4 +63,41 @@ class FieldCriteriaRules
         return $this->sortable;
     }
 
+    private function assertRuleForField(Field $field): void
+    {
+        if (!$this->field->equals($field)) {
+            throw new InvalidFieldCriteriaRuleForAssertFieldException(
+                'Invalid rule ' . $this->field->value() . ' for ' . $field->value()
+            );
+        }
+    }
+
+    public function assertFilter(Filter $filter): void
+    {
+        $this->assertRuleForField($filter->field());
+
+        if (false === $this->isFilterable()) {
+            throw new FieldCriteriaRuleViolationException($filter->serialize());
+        }
+
+        if (empty($this->comparisonOperators)) {
+            return;
+        }
+
+        foreach ($this->comparisonOperators as $comparisonOperator) {
+            if ($filter->operator()->equals($comparisonOperator)) {
+                return;
+            }
+        }
+
+        throw new InvalidFieldCriteriaRuleForAssertFieldException($filter->serialize());
+    }
+
+    public function assertOrder(Order $order): void
+    {
+        $this->assertRuleForField($order->field());
+        if (false === $this->isSortable()) {
+            throw new FieldCriteriaRuleViolationException($order->serialize());
+        }
+    }
 }

@@ -70,44 +70,60 @@ class ComparisonOperator
         return $this->value;
     }
 
+    public function type(): string
+    {
+        return static::MAP[$this->value];
+    }
+
+    public function equals(?ComparisonOperator $comparisonOperator, bool $strict = false): bool
+    {
+        if (null === $comparisonOperator) {
+            return false;
+        }
+
+        return true === $strict
+            ? $this->value() === $comparisonOperator->value()
+            : $this->type() === $comparisonOperator->type();
+    }
+
     public function isEqual(): bool
     {
-        return self::MAP[$this->value] === self::EQUAL;
+        return $this->type() === self::EQUAL;
     }
 
     public function isNotEqual(): bool
     {
-        return self::MAP[$this->value] === self::NOT_EQUAL;
+        return $this->type() === self::NOT_EQUAL;
     }
 
     public function isGreater(): bool
     {
-        return self::MAP[$this->value] === self::GREATER;
+        return $this->type() === self::GREATER;
     }
 
     public function isGreaterOrEqual(): bool
     {
-        return self::MAP[$this->value] === self::GREATER_OR_EQUAL;
+        return $this->type() === self::GREATER_OR_EQUAL;
     }
 
     public function isLess(): bool
     {
-        return self::MAP[$this->value] === self::LESS;
+        return $this->type() === self::LESS;
     }
 
     public function isLessOrEqual(): bool
     {
-        return self::MAP[$this->value] === self::LESS_OR_EQUAL;
+        return $this->type() === self::LESS_OR_EQUAL;
     }
 
     public function isIn(): bool
     {
-        return self::MAP[$this->value] === self::IN;
+        return $this->type() === self::IN;
     }
 
     public function isLike(): bool
     {
-        return self::MAP[$this->value] === self::LIKE;
+        return $this->type() === self::LIKE;
     }
 
     public static function equal(): self

@@ -42,4 +42,9 @@ class Field
 
         return 0 === strpos($longField . '.', $shortField . '.');
     }
+
+    public function equals(?Field $field): bool
+    {
+        return null !== $field && $field->value() === $this->value();
+    }
 }
