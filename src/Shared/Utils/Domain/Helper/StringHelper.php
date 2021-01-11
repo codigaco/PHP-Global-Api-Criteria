@@ -1,6 +1,6 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Shared\Domain\Helper;
+namespace QuiqueGilB\GlobalApiCriteria\Shared\Utils\Domain\Helper;
 
 class StringHelper
 {

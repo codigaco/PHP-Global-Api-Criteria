@@ -3,7 +3,7 @@
 namespace QuiqueGilB\GlobalApiCriteria\Shared\Domain\ValueObject;
 
 use QuiqueGilB\GlobalApiCriteria\Shared\Domain\Exception\InvalidValueTypeException;
-use QuiqueGilB\GlobalApiCriteria\Shared\Domain\Helper\StringHelper;
+use QuiqueGilB\GlobalApiCriteria\Shared\Utils\Domain\Helper\StringHelper;
 
 class ValueType
 {
