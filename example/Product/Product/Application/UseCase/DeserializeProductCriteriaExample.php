@@ -1,10 +1,11 @@
 <?php
 
+namespace QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Application\UseCase;
 
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject\Paginate;
-use QuiqueGilB\GlobalApiCriteria\Example\User\User\Domain\Criteria\ProductCriteriaExample;
+use QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Domain\Criteria\ProductCriteriaExample;
 
 class DeserializeProductCriteriaExample
 {

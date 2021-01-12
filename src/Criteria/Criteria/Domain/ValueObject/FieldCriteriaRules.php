@@ -90,7 +90,7 @@ class FieldCriteriaRules
             }
         }
 
-        throw new InvalidFieldCriteriaRuleForAssertFieldException($filter->serialize());
+        throw new FieldCriteriaRuleViolationException($filter->serialize());
     }
 
     public function assertOrder(Order $order): void

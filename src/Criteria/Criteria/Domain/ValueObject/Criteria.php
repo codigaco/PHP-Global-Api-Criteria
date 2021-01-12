@@ -84,7 +84,7 @@ class Criteria
     public static function rulesGroup(): FieldCriteriaRulesGroup
     {
         if (null === self::$rulesGroup) {
-            self::$rulesGroup = new FieldCriteriaRulesGroup(self::createRules());
+            static::$rulesGroup = new FieldCriteriaRulesGroup(...static::createRules());
         }
 
         return self::$rulesGroup;
