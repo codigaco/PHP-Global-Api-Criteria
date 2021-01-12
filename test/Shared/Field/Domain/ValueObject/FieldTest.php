@@ -1,6 +1,6 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Test\Shared\ValueObject;
+namespace QuiqueGilB\GlobalApiCriteria\Test\Shared\Field\Domain\ValueObject;
 
 use PHPUnit\Framework\TestCase;
 use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\Exception\InvalidFieldException;
