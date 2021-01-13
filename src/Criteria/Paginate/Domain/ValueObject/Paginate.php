@@ -18,12 +18,12 @@ class Paginate
         return new static(new Offset($offset), new Limit($limit));
     }
 
-    public function limit(): ?Limit
+    public function limit(): Limit
     {
         return $this->limit;
     }
 
-    public function offset(): ?Offset
+    public function offset(): Offset
     {
         return $this->offset;
     }
