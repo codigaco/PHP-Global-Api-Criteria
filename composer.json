@@ -18,7 +18,7 @@
     "psr-4": {
       "QuiqueGilB\\GlobalApiCriteria\\": "src/",
       "QuiqueGilB\\GlobalApiCriteria\\Example\\": "example/",
-      "QuiqueGilB\\GlobalApiCriteria\\Test\\": "test/"
+      "QuiqueGilB\\GlobalApiCriteria\\Tests\\": "tests/"
     }
   },
   "require-dev": {

@@ -8,7 +8,7 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject\Paginate;
 
 class Criteria
 {
-    private static $rulesGroup;
+    private static $rulesGroup = [];
 
     private $filterGroup;
     private $orderGroup;
@@ -83,10 +83,10 @@ class Criteria
 
     public static function rulesGroup(): FieldCriteriaRulesGroup
     {
-        if (null === self::$rulesGroup) {
-            static::$rulesGroup = new FieldCriteriaRulesGroup(...static::createRules());
+        if (!isset(static::$rulesGroup[static::class])) {
+            static::$rulesGroup[static::class] = new FieldCriteriaRulesGroup(...static::createRules());
         }
 
-        return self::$rulesGroup;
+        return self::$rulesGroup[static::class];
     }
 }
