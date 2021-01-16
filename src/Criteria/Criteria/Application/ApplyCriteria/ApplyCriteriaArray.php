@@ -7,6 +7,8 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject\Paginate;
+use QuiqueGilB\GlobalApiCriteria\Shared\Utils\Domain\Helper\Obj;
+use TypeError;
 
 class ApplyCriteriaArray
 {
@@ -51,6 +53,7 @@ class ApplyCriteriaArray
             }));
     }
 
+    /** @noinspection TypeUnsafeComparisonInspection */
     private static function applyFilter($filter, $element): bool
     {
         if ($filter instanceof FilterGroup) {
@@ -66,10 +69,10 @@ class ApplyCriteriaArray
         }
 
         if (!$filter instanceof Filter) {
-            throw new \Exception('wiiiiiiiiiiiiiii');
+            throw new TypeError(get_class($filter));
         }
 
-        $value = $element[$filter->field()->value()];
+        $value = Obj::get($element, $filter->field()->value());
 
         if ($filter->operator()->isEqual()) {
             return $value == $filter->value()->scalar();
