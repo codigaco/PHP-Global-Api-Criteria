@@ -9,12 +9,18 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject\Paginate;
 use QuiqueGilB\GlobalApiCriteria\Shared\Utils\Domain\Helper\Obj;
+use ReflectionException;
 use TypeError;
 
 class ApplyCriteriaArray
 {
-
-
+    /**
+     * @param Criteria $criteria
+     * @param array $array
+     * @param array $mapFields
+     * @return array
+     * @throws ReflectionException
+     */
     public static function apply(Criteria $criteria, array $array, array $mapFields = []): array
     {
         $array = self::applyFilterGroup($criteria->filters(), $array);
@@ -28,6 +34,12 @@ class ApplyCriteriaArray
         return array_values(array_slice($array, $paginate->offset()->value(), $paginate->limit()->value()));
     }
 
+    /**
+     * @param OrderGroup $orderGroup
+     * @param array $array
+     * @return array
+     * @throws ReflectionException
+     */
     private static function applyOrderGroup(OrderGroup $orderGroup, array $array): array
     {
         usort($array,
@@ -46,6 +58,12 @@ class ApplyCriteriaArray
         return array_values($array);
     }
 
+    /**
+     * @param FilterGroup $filterGroup
+     * @param array $array
+     * @return array
+     * @throws ReflectionException
+     */
     public static function applyFilterGroup(FilterGroup $filterGroup, array $array): array
     {
         return array_values(array_filter($array,
@@ -58,6 +76,7 @@ class ApplyCriteriaArray
      * @param $filter
      * @param $element
      * @return bool
+     * @throws ReflectionException
      */
     private static function applyFilter($filter, $element): bool
     {
@@ -108,6 +127,4 @@ class ApplyCriteriaArray
 
         throw new InvalidComparisonOperatorException($filter->operator()->value());
     }
-
-
 }

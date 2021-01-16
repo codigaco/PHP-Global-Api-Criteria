@@ -8,11 +8,6 @@ class Field
 {
     private $value;
 
-    /**
-     * Field constructor.
-     * @param string $field
-     * @throws InvalidFieldException
-     */
     public function __construct(string $field)
     {
         self::validate($field);
@@ -24,10 +19,6 @@ class Field
         return $this->value;
     }
 
-    /**
-     * @param string $field
-     * @throws InvalidFieldException
-     */
     private static function validate(string $field): void
     {
         if (empty($field) || false !== strpos($field, ' ')) {
