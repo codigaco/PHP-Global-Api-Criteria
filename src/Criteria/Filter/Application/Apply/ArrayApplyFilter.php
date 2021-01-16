@@ -1,70 +1,38 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
-namespace QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Application\ApplyCriteria;
+namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Application\Apply;
 
-use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject\Criteria;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\InvalidComparisonOperatorException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
-use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderGroup;
-use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject\Paginate;
 use QuiqueGilB\GlobalApiCriteria\Shared\Utils\Domain\Helper\Obj;
+use ReflectionException;
 use TypeError;
 
-class ApplyCriteriaArray
+class ArrayApplyFilter
 {
-
-
-    public static function apply(Criteria $criteria, array $array, array $mapFields = []): array
-    {
-        $array = self::applyFilterGroup($criteria->filters(), $array);
-        $array = self::applyOrderGroup($criteria->orders(), $array);
-        $array = self::applyPaginate($criteria->paginate(), $array);
-        return $array;
-    }
-
-    private static function applyPaginate(Paginate $paginate, array $array): array
-    {
-        return array_values(array_slice($array, $paginate->offset()->value(), $paginate->limit()->value()));
-    }
-
-    private static function applyOrderGroup(OrderGroup $orderGroup, array $array): array
-    {
-        usort($array,
-            static function ($a, $b) use ($orderGroup) {
-                foreach ($orderGroup->orders() as $order) {
-                    $response = Obj::get($a, $order->field()->value()) <=> Obj::get($b, $order->field()->value());
-                    if ($order->type()->isDesc()) {
-                        $response *= -1;
-                    }
-                    if ($response !== 0) {
-                        return $response;
-                    }
-                }
-                return 0;
-            });
-        return array_values($array);
-    }
-
-    public static function applyFilterGroup(FilterGroup $filterGroup, array $array): array
+    public static function apply(array $array, FilterGroup $filterGroup, array $mapFields = []): array
     {
         return array_values(array_filter($array,
-            static function ($item) use ($filterGroup) {
-                return self::applyFilter($filterGroup, $item);
-            }));
+            static function ($item) use ($mapFields, $filterGroup) {
+                return self::applyFilter($filterGroup, $item, $mapFields);
+            }
+        ));
     }
 
     /**
-     * @param $filter
-     * @param $element
+     * @param FilterGroup|Filter $filter
+     * @param object|array $element
+     * @param array $mapFields
      * @return bool
+     * @throws ReflectionException
      */
-    private static function applyFilter($filter, $element): bool
+    private static function applyFilter($filter, $element, $mapFields): bool
     {
         if ($filter instanceof FilterGroup) {
             $isValid = true;
             foreach ($filter->filters() as $item) {
-                $response = self::applyFilter($item, $element);
+                $response = self::applyFilter($item, $element, $mapFields);
 
                 $isValid = $item->logicalOperator()->isAnd()
                     ? $isValid && $response
@@ -77,7 +45,11 @@ class ApplyCriteriaArray
             throw new TypeError(get_class($filter));
         }
 
-        $value = Obj::get($element, $filter->field()->value());
+        $mapped = $mapFields[$filter->field()->value()] ?? $filter->field()->value();
+
+        $value = is_callable($mapped)
+            ? $mapped($element)
+            : Obj::get($element, $mapped);
 
         if ($filter->operator()->isEqual()) {
             /** @noinspection TypeUnsafeComparisonInspection */
@@ -108,6 +80,5 @@ class ApplyCriteriaArray
 
         throw new InvalidComparisonOperatorException($filter->operator()->value());
     }
-
 
 }
