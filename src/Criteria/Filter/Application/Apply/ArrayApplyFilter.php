@@ -27,7 +27,7 @@ class ArrayApplyFilter
      * @return bool
      * @throws ReflectionException
      */
-    private static function applyFilter($filter, $element, $mapFields): bool
+    private static function applyFilter($filter, $element, array $mapFields): bool
     {
         if ($filter instanceof FilterGroup) {
             $isValid = true;
