@@ -7,7 +7,6 @@ use QuiqueGilB\GlobalApiCriteria\QueryResponse\Data\Domain\ValueObject\QueryData
 use QuiqueGilB\GlobalApiCriteria\QueryResponse\Metadata\Domain\ValueObject\QueryMetadata;
 use QuiqueGilB\GlobalApiCriteria\QueryResponse\QueryResponse\Domain\Exception\InvalidQueryResponseException;
 use QuiqueGilB\GlobalApiCriteria\QueryResponse\QueryResponse\Domain\ValueObject\QueryResponse;
-use stdClass;
 
 class QueryResponseTest extends TestCase
 {

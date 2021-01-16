@@ -3,7 +3,6 @@
 namespace QuiqueGilB\GlobalApiCriteria\Tests\Criteria\Paginate\Domain\ValueObject;
 
 use PHPUnit\Framework\TestCase;
-use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\Exception\InvalidLimitException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\Exception\InvalidOffsetException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject\Offset;
 

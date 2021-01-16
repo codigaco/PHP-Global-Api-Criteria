@@ -3,6 +3,7 @@
 namespace QuiqueGilB\GlobalApiCriteria\Tests\Shared\Utils\Domain\Helper;
 
 use PHPUnit\Framework\TestCase;
+use QuiqueGilB\GlobalApiCriteria\Shared\Utils\Domain\Exception\KeyNotDefinedException;
 use QuiqueGilB\GlobalApiCriteria\Shared\Utils\Domain\Helper\Obj;
 use QuiqueGilB\GlobalApiCriteria\Shared\Value\Domain\ValueObject\Value;
 use TypeError;
@@ -22,7 +23,6 @@ class ObjTest extends TestCase
 
         self::assertEquals('Enrique', Obj::get($arr, 'name'));
         self::assertEquals('Valencia', Obj::get($arr, 'address.city'));
-        self::assertNull(Obj::get($arr, 'email'));
     }
 
     /** @test */
@@ -37,7 +37,6 @@ class ObjTest extends TestCase
 
         self::assertEquals('Enrique', Obj::get($arr, 'name'));
         self::assertEquals('Valencia', Obj::get($arr, 'address.city'));
-        self::assertNull(Obj::get($arr, 'email'));
     }
 
     /** @test */
@@ -47,7 +46,12 @@ class ObjTest extends TestCase
 
         self::assertEquals('Enrique', Obj::get($obj, 'value'));
         self::assertEquals('string', Obj::get($obj, 'type.value'));
-        self::assertNull(Obj::get($obj, 'email'));
+    }
+
+    /** @test */
+    public function assert_null_if_key_not_exists(): void
+    {
+        self::assertNull(Obj::getOrNull([], 'email'));
     }
 
     /** @test */
@@ -55,6 +59,13 @@ class ObjTest extends TestCase
     {
         $this->expectException(TypeError::class);
         self::assertEquals('Enrique', Obj::get("my value", 'value'));
+    }
+
+    /** @test */
+    public function assert_key_not_defined(): void
+    {
+        $this->expectException(KeyNotDefinedException::class);
+        Obj::get(['name' => 'Enrique'], 'email');
     }
 
 }

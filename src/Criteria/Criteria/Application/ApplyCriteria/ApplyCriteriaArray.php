@@ -3,6 +3,7 @@
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Application\ApplyCriteria;
 
 use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject\Criteria;
+use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\Exception\InvalidComparisonOperatorException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderGroup;
@@ -14,7 +15,7 @@ class ApplyCriteriaArray
 {
 
 
-    public static function apply(Criteria $criteria, array $array): array
+    public static function apply(Criteria $criteria, array $array, array $mapFields = []): array
     {
         $array = self::applyFilterGroup($criteria->filters(), $array);
         $array = self::applyOrderGroup($criteria->orders(), $array);
@@ -32,7 +33,7 @@ class ApplyCriteriaArray
         usort($array,
             static function ($a, $b) use ($orderGroup) {
                 foreach ($orderGroup->orders() as $order) {
-                    $response = $a[$order->field()->value()] <=> $b[$order->field()->value()];
+                    $response = Obj::get($a, $order->field()->value()) <=> Obj::get($b, $order->field()->value());
                     if ($order->type()->isDesc()) {
                         $response *= -1;
                     }
@@ -53,7 +54,11 @@ class ApplyCriteriaArray
             }));
     }
 
-    /** @noinspection TypeUnsafeComparisonInspection */
+    /**
+     * @param $filter
+     * @param $element
+     * @return bool
+     */
     private static function applyFilter($filter, $element): bool
     {
         if ($filter instanceof FilterGroup) {
@@ -75,9 +80,11 @@ class ApplyCriteriaArray
         $value = Obj::get($element, $filter->field()->value());
 
         if ($filter->operator()->isEqual()) {
+            /** @noinspection TypeUnsafeComparisonInspection */
             return $value == $filter->value()->scalar();
         }
         if ($filter->operator()->isNotEqual()) {
+            /** @noinspection TypeUnsafeComparisonInspection */
             return $value != $filter->value()->scalar();
         }
         if ($filter->operator()->isLike()) {
@@ -99,7 +106,7 @@ class ApplyCriteriaArray
             return $value >= $filter->value()->scalar();
         }
 
-        throw new \Exception('jajajajaja');
+        throw new InvalidComparisonOperatorException($filter->operator()->value());
     }
 
 

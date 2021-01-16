@@ -8,7 +8,6 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\ComparisonOp
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\Order;
 use QuiqueGilB\GlobalApiCriteria\Shared\Field\Domain\ValueObject\Field;
-use RuntimeException;
 
 class FieldCriteriaRules
 {
