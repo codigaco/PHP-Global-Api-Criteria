@@ -10,7 +10,6 @@ use TypeError;
 
 class ObjTest extends TestCase
 {
-
     /** @test */
     public function get_property_array(): void
     {
@@ -67,5 +66,4 @@ class ObjTest extends TestCase
         $this->expectException(KeyNotDefinedException::class);
         Obj::get(['name' => 'Enrique'], 'email');
     }
-
 }

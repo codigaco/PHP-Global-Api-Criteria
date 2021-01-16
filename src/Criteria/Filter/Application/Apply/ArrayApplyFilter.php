@@ -80,5 +80,4 @@ class ArrayApplyFilter
 
         throw new InvalidComparisonOperatorException($filter->operator()->value());
     }
-
 }

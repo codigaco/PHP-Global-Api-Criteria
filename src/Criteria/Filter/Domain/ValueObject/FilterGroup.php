@@ -72,6 +72,7 @@ class FilterGroup extends BaseFilter
                 $baseFilter instanceof self ? '(%s)' : '%s',
                 $baseFilter->serialize()
             );
+
             $serialized .= ('' === $serialized ? '' : ' ' . $baseFilter->logicalOperator()->value()) . ' ' . $expresion;
         }
 

@@ -2,7 +2,7 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\QueryResponse\Metadata\Domain\ValueObject;
 
-use InvalidQueryMetadataException;
+use QuiqueGilB\GlobalApiCriteria\QueryResponse\Metadata\Domain\Exception\InvalidQueryMetadataException;
 
 class QueryMetadata
 {
@@ -57,5 +57,4 @@ class QueryMetadata
     {
         return $this->items;
     }
-
 }

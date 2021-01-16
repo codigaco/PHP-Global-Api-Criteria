@@ -20,21 +20,12 @@ class OrderType
 
     private $value;
 
-    /**
-     * OrderType constructor.
-     * @param string $orderType
-     * @throws InvalidOrderTypeException
-     */
     public function __construct(string $orderType)
     {
         self::validate($orderType);
         $this->value = $orderType;
     }
 
-    /**
-     * @param string $orderType
-     * @throws InvalidOrderTypeException
-     */
     private static function validate(string $orderType): void
     {
         if (!isset(self::MAP[$orderType])) {

@@ -9,7 +9,7 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\ComparisonOp
 class ComparisonOperatorTest extends TestCase
 {
     /** @test */
-    function invalid_instances(): void
+    public function invalid_instances(): void
     {
         $this->expectException(InvalidComparisonOperatorException::class);
         ComparisonOperator::create('fakeOperator');
