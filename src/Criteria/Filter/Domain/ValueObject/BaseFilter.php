@@ -15,10 +15,11 @@ abstract class BaseFilter
 
     protected function setLogicOperator(LogicalOperator $logicalOperator): self
     {
-        if (null === $this->logicalOperator) {
-            $this->logicalOperator = $logicalOperator;
-            return $this;
+        if (null !== $this->logicalOperator) {
+            throw new LogicalOperatorViolationException('Not possible modify logical operator');
         }
-        throw new LogicalOperatorViolationException('Not possible modify logical operator');
+
+        $this->logicalOperator = $logicalOperator;
+        return $this;
     }
 }
