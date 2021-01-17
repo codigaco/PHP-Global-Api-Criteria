@@ -33,6 +33,11 @@ class Filter extends BaseFilter
         return $this->value;
     }
 
+    public function hasField(string $field): bool
+    {
+        return $this->field->has($field);
+    }
+
     public static function deserialize($filterExpression): self
     {
         $firstSpace = strpos($filterExpression, ' ');

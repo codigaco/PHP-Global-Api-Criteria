@@ -25,6 +25,11 @@ class Order
         return $this->orderType;
     }
 
+    public function hasField(string $field): bool
+    {
+        return $this->field->has($field);
+    }
+
     public static function deserialize(string $order): self
     {
         $order = trim($order);
@@ -46,7 +51,7 @@ class Order
 
     public function serialize(): string
     {
-        if('' === $this->orderType->value()) {
+        if ('' === $this->orderType->value()) {
             return $this->field->value();
         }
 

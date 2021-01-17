@@ -28,10 +28,10 @@ class Criteria
 
     public static function validate(?FilterGroup $filterGroup, ?OrderGroup $orderGroup): void
     {
-        if(null !== $filterGroup) {
+        if (null !== $filterGroup) {
             self::rulesGroup()->assertRulesOfFilter($filterGroup);
         }
-        if(null !== $orderGroup) {
+        if (null !== $orderGroup) {
             self::rulesGroup()->assertRulesOfOrder($orderGroup);
         }
     }
@@ -39,6 +39,13 @@ class Criteria
     public static function create(): self
     {
         return new static();
+    }
+
+    public function hasField(string $field): bool
+    {
+        return
+            (null !== $this->filterGroup && $this->filterGroup->hasField($field))
+            || (null !== $this->orderGroup && $this->orderGroup->hasField($field));
     }
 
     public function withFilter(FilterGroup $filterGroup): self

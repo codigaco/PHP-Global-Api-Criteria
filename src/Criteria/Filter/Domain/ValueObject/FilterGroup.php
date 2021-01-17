@@ -58,6 +58,16 @@ class FilterGroup extends BaseFilter
         return $this;
     }
 
+    public function hasField(string $field): bool
+    {
+        foreach ($this->value as $item) {
+            if ($item->hasField($field)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static function deserialize(string $filter): self
     {
         return FilterGroupFactory::fromString($filter);

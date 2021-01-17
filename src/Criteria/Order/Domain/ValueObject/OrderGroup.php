@@ -33,6 +33,16 @@ class OrderGroup
         return $this->orders[$index];
     }
 
+    public function hasField(string $field): bool
+    {
+        foreach ($this->orders as $order) {
+            if ($order->hasField($field)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static function deserialize(string $stringOrders): self
     {
         $orderGroup = new static();
