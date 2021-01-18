@@ -23,7 +23,9 @@
   },
   "require-dev": {
     "ext-json": "*",
+    "ext-pdo": "*",
     "phpunit/phpunit": "^9.5",
-    "symfony/var-dumper": "^5.2"
+    "symfony/var-dumper": "^5.2",
+    "illuminate/database": "^8.22"
   }
 }
