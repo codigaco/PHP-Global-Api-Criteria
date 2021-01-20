@@ -2,7 +2,7 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Application\Apply;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject\Criteria;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Application\Apply\EloquentApplyFilter;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Application\Apply\EloquentApplyOrder;

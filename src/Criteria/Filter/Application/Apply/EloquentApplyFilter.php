@@ -2,11 +2,10 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Application\Apply;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\ComparisonOperator;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
-use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\LogicalOperator;
 use TypeError;
 
 class EloquentApplyFilter
