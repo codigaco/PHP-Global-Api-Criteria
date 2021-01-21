@@ -29,6 +29,7 @@ class ProductCriteriaExample extends Criteria
                     ComparisonOperator::less(),
                     ComparisonOperator::lessOrEqual()
                 ),
+            FieldCriteriaRules::create('price'),
             FieldCriteriaRules::create('count_sales'),
             FieldCriteriaRules::create('category')
                 ->sortable(false)
