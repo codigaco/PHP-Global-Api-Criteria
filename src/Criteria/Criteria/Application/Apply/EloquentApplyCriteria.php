@@ -10,8 +10,18 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Application\Apply\EloquentApp
 
 class EloquentApplyCriteria
 {
-    public static function apply(Builder $builder, Criteria $criteria, array $mapFields = []): Builder
+    /**
+     * @param $builder
+     * @param Criteria $criteria
+     * @param array $mapFields
+     * @return Builder|\Illuminate\Database\Query\Builder
+     */
+    public static function apply($builder, Criteria $criteria, array $mapFields = [])
     {
+        if (!$builder instanceof Builder && !$builder instanceof \Illuminate\Database\Query\Builder) {
+            throw new \TypeError(gettype($builder));
+        }
+
         if (null !== $criteria->filters()) {
             $builder = EloquentApplyFilter::apply($builder, $criteria->filters(), $mapFields);
         }
@@ -19,6 +29,7 @@ class EloquentApplyCriteria
         if (null !== $criteria->orders()) {
             $builder = EloquentApplyOrder::apply($builder, $criteria->orders(), $mapFields);
         }
+
         if (null !== $criteria->paginate()) {
             $builder = EloquentApplyPaginate::apply($builder, $criteria->paginate());
         }

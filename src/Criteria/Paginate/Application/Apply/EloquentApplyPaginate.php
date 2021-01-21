@@ -4,11 +4,21 @@ namespace QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Application\Apply;
 
 use Illuminate\Database\Eloquent\Builder;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject\Paginate;
+use TypeError;
 
 class EloquentApplyPaginate
 {
-    public static function apply(Builder $builder, Paginate $paginate): Builder
+    /**
+     * @param $builder
+     * @param Paginate $paginate
+     * @return Builder|\Illuminate\Database\Query\Builder
+     */
+    public static function apply($builder, Paginate $paginate)
     {
+        if (!$builder instanceof Builder && !$builder instanceof \Illuminate\Database\Query\Builder) {
+            throw new TypeError(gettype($builder));
+        }
+
         if (false === $paginate->offset()->isZero()) {
             $builder->offset($paginate->offset()->value());
         }

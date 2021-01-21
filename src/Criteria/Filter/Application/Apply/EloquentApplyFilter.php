@@ -10,11 +10,23 @@ use TypeError;
 
 class EloquentApplyFilter
 {
-    public static function apply(Builder $builder, $filter, $mapFields = []): Builder
+    /**
+     * @param Builder|\Illuminate\Database\Query\Builder$builder
+     * @param $filter
+     * @param array $mapFields
+     * @return Builder|\Illuminate\Database\Query\Builder
+     */
+    public static function apply($builder, $filter, $mapFields = [])
     {
+        if (!$builder instanceof Builder && !$builder instanceof \Illuminate\Database\Query\Builder) {
+            throw new TypeError(gettype($builder));
+        }
+        if (is_null($filter)) {
+            return $builder;
+        }
         if ($filter instanceof FilterGroup) {
             foreach ($filter->filters() as $filterItem) {
-                $createBuilder = static function (Builder $subBuilder) use ($filterItem, $mapFields) {
+                $createBuilder = static function ($subBuilder) use ($filterItem, $mapFields) {
                     return static::apply($subBuilder, $filterItem, $mapFields);
                 };
 

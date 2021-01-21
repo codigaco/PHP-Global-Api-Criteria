@@ -1,7 +1,5 @@
 <?php
 
-use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
-use QuiqueGilB\GlobalApiCriteria\Criteria\Paginate\Domain\ValueObject\Paginate;
 use QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Application\Query\SearchProductsQuery;
 use QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Application\Query\SearchProductsQueryHandler;
 use QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Domain\Criteria\ProductCriteriaExample;
