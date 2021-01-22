@@ -25,13 +25,12 @@ dump($queryResponse);
 
 function getRepository(string $orm): ProductRepository
 {
-    switch ($orm) {
-        case 'eloquent':
-            require_once __DIR__ . '/Product/Shared/Infrastructure/Eloquent/configuration.php';
-            return new EloquentProductRepository();
-        default:
-            throw new RuntimeException('Not recognized orm');
+    if ('eloquent' === $orm) {
+        require_once __DIR__ . '/Product/Shared/Infrastructure/Eloquent/configuration.php';
+        return new EloquentProductRepository();
     }
+
+    throw new RuntimeException('Not recognized orm');
 }
 
 

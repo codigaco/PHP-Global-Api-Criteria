@@ -69,5 +69,4 @@ class OrderTest extends TestCase
         self::assertEquals($orderString, Order::deserialize($orderString)->serialize());
         self::assertEquals($orderString, (new Order(new Field('name'), new OrderType('desc')))->serialize());
     }
-
 }

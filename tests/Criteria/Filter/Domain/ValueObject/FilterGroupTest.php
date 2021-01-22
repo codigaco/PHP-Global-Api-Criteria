@@ -105,8 +105,6 @@ class FilterGroupTest extends TestCase
         self::assertEquals('city', $filter->field()->value());
         self::assertEquals('like', $filter->operator()->value());
         self::assertEquals('bee', $filter->value()->scalar());
-
-
     }
 
     /** @test */
@@ -132,7 +130,5 @@ class FilterGroupTest extends TestCase
             );
 
         self::assertEquals($filterText, $filterGroup->serialize());
-
     }
-
 }
