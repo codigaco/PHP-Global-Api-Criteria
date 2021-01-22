@@ -1,6 +1,6 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Domain\Model;
+namespace QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model;
 
 use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject\Criteria;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Domain\Model;
+namespace QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model;
 
-use QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Domain\Criteria\ProductCriteriaExample;
+use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Criteria\ProductCriteriaExample;
 
 interface ProductRepository
 {

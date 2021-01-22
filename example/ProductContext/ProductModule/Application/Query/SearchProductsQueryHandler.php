@@ -1,8 +1,8 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Application\Query;
+namespace QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Application\Query;
 
-use QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Domain\Model\ProductRepository;
+use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model\ProductRepository;
 use QuiqueGilB\GlobalApiCriteria\QueryResponse\Data\Domain\ValueObject\QueryData;
 use QuiqueGilB\GlobalApiCriteria\QueryResponse\Metadata\Domain\ValueObject\QueryMetadata;
 use QuiqueGilB\GlobalApiCriteria\QueryResponse\QueryResponse\Domain\ValueObject\QueryResponse;

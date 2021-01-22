@@ -1,8 +1,8 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Application\Query;
+namespace QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Application\Query;
 
-use QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Domain\Criteria\ProductCriteriaExample;
+use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Criteria\ProductCriteriaExample;
 
 class SearchProductsQuery
 {

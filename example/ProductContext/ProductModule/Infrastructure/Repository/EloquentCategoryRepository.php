@@ -1,12 +1,12 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Infrastructure\Repository;
+namespace QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Infrastructure\Repository;
 
 use Illuminate\Database\Eloquent\Builder;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Application\Apply\EloquentApplyCriteria;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject\Criteria;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Application\Apply\EloquentApplyFilter;
-use QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Domain\Model\CategoryRepository;
+use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model\CategoryRepository;
 use QuiqueGilB\GlobalApiCriteria\Example\Product\Shared\Infrastructure\Eloquent\EloquentRepository;
 
 class EloquentCategoryRepository extends EloquentRepository implements CategoryRepository

@@ -7,7 +7,7 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\Exception\FieldCriteri
 use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\Exception\InvalidFieldCriteriaRuleForAssertFieldException;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\FilterGroup;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Order\Domain\ValueObject\OrderGroup;
-use QuiqueGilB\GlobalApiCriteria\Example\Product\Product\Domain\Criteria\ProductCriteriaExample;
+use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Criteria\ProductCriteriaExample;
 
 class ProductCriteriaExampleTest extends TestCase
 {
