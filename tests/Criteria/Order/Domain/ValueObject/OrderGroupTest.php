@@ -52,7 +52,6 @@ class OrderGroupTest extends TestCase
         self::assertTrue($orderGroup->get(1)->type()->isAsc());
         self::assertEquals('lastName', $orderGroup->get(2)->field()->value());
         self::assertTrue($orderGroup->get(2)->type()->isDesc());
-
     }
 
     /** @test */
@@ -86,6 +85,5 @@ class OrderGroupTest extends TestCase
         self::assertEquals('desc', $orderGroup->get(1)->type()->value());
         self::assertEquals('name', $orderGroup->get(2)->field()->value());
         self::assertEquals('', $orderGroup->get(2)->type()->value());
-
     }
 }

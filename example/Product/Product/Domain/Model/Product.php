@@ -38,7 +38,7 @@ class Product
         return $this->stock;
     }
 
-    public function categories()
+    public function categories(): array
     {
         return $this->categories;
     }

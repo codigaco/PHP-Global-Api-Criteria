@@ -69,5 +69,4 @@ class FilterTest extends TestCase
         self::assertSame(['spain', 222, 'germany'], $filter->value()->scalar());
         self::assertEquals('in', $filter->operator()->value());
     }
-
 }
