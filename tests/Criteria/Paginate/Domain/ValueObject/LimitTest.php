@@ -26,5 +26,4 @@ class LimitTest extends TestCase
         self::assertEquals(50, $limit->value());
         self::assertFalse($limit->isZero());
     }
-
 }

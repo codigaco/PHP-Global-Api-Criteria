@@ -26,5 +26,4 @@ class LogicalOperatorTest extends TestCase
         self::assertTrue(LogicalOperator::create('AND')->isAnd());
         self::assertTrue(LogicalOperator::create('&&')->isAnd());
     }
-
 }

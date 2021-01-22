@@ -40,5 +40,4 @@ class FieldTest extends TestCase
         self::assertFalse($field->has('locat'));
         self::assertFalse($field->has('location.coord'));
     }
-
 }
