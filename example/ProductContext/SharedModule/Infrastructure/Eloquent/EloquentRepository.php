@@ -1,6 +1,6 @@
 <?php
 
-namespace QuiqueGilB\GlobalApiCriteria\Example\Product\Shared\Infrastructure\Eloquent;
+namespace QuiqueGilB\GlobalApiCriteria\Example\ProductContext\SharedModule\Infrastructure\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 use QuiqueGilB\GlobalApiCriteria\Shared\Shared\Domain\Castable;
