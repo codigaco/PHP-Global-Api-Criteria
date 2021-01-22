@@ -7,7 +7,7 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Application\Apply\EloquentApp
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Application\Apply\EloquentApplyFilter;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Criteria\ProductCriteriaExample;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model\ProductRepository;
-use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\SharedModule\Infrastructure\Eloquent\EloquentRepository;
+use QuiqueGilB\GlobalApiCriteria\Example\SharedContext\SharedModule\Infrastructure\Eloquent\EloquentRepository;
 
 class EloquentProductRepository extends EloquentRepository implements ProductRepository
 {
