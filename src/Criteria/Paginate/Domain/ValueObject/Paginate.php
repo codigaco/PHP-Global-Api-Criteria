@@ -45,10 +45,11 @@ class Paginate
 
     public static function deserialize(string $pagination): self
     {
-        $paginationSplit = preg_match_all('/[1-9]+/', $pagination, $matches)[0];
+        preg_match_all('/\d+/', $pagination, $matches);
 
-        $offset = (int)trim($paginationSplit[0] ?? 0);
-        $limit = (int)trim($paginationSplit[1] ?? 0);
+        $matches = $matches[0];
+        $offset = (int)trim($matches[0] ?? 0);
+        $limit = (int)trim($matches[1] ?? 0);
 
         return new static(new Offset($offset), new Limit($limit));
     }
