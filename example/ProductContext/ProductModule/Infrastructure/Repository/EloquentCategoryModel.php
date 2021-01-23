@@ -9,6 +9,14 @@ class EloquentCategoryModel extends Model
 {
     protected $table = 'category';
 
+    public function products()
+    {
+        return $this->belongsToMany(EloquentProductModel::class,
+            'category_product',
+            'category_id',
+            'product_id',
+        );
+    }
 
     public function cast(): Category
     {

@@ -1,7 +1,7 @@
 <?php
 
-use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Application\Query\SearchProductsQuery;
-use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Application\Query\SearchProductsQueryHandler;
+use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Application\Query\Product\SearchProductsQuery;
+use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Application\Query\Product\SearchProductsQueryHandler;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Criteria\ProductCriteriaExample;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model\ProductRepository;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Infrastructure\Repository\EloquentProductRepository;

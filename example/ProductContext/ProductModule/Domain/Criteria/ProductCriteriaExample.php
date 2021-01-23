@@ -6,7 +6,7 @@ use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject\Criteria;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Criteria\Domain\ValueObject\FieldCriteriaRules;
 use QuiqueGilB\GlobalApiCriteria\Criteria\Filter\Domain\ValueObject\ComparisonOperator;
 
-/** @method static create(): ProductCriteriaExample  */
+///** @method static create(): ProductCriteriaExample  */
 class ProductCriteriaExample extends Criteria
 {
     protected static function createRules(): array
@@ -32,13 +32,19 @@ class ProductCriteriaExample extends Criteria
                 ),
             FieldCriteriaRules::create('price'),
             FieldCriteriaRules::create('count_sales'),
-            FieldCriteriaRules::create('category')
+            FieldCriteriaRules::create('category.id')
                 ->sortable(false)
                 ->comparisonOperators(
                     ComparisonOperator::equal(),
                     ComparisonOperator::in()
-                )
-            ,
+                ),
+            FieldCriteriaRules::create('category.name')
+                ->sortable(false)
+                ->comparisonOperators(
+                    ComparisonOperator::equal(),
+                    ComparisonOperator::in(),
+                    ComparisonOperator::like(),
+                ),
 
         ];
     }

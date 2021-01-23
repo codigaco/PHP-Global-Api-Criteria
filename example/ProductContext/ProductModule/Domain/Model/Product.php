@@ -10,12 +10,13 @@ class Product
     private $stock;
     private $categories;
 
-    public function __construct(int $id, string $name, float $price, int $stock)
+    public function __construct(int $id, string $name, float $price, int $stock, Category ...$categories)
     {
         $this->id = $id;
         $this->name = $name;
         $this->price = $price;
         $this->stock = $stock;
+        $this->categories = $categories;
     }
 
     public function id(): int

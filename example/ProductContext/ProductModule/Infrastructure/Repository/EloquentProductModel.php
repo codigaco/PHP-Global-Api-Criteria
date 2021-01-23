@@ -14,17 +14,25 @@ class EloquentProductModel extends Model implements Castable
     {
         return $this->belongsToMany(
             EloquentCategoryModel::class,
-            'category_product'
+            'category_product',
+            'product_id',
+            'category_id',
         );
     }
 
     public function cast(): Product
     {
+        $categories = [];
+        foreach ($this->categories as $category) {
+            $categories[] = $category->cast();
+        }
+
         return new Product(
             $this->id,
             $this->name,
             $this->price,
-            $this->stock
+            $this->stock,
+            ...$categories
         );
     }
 }

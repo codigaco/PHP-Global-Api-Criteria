@@ -15,25 +15,45 @@ class EloquentProductRepository extends EloquentRepository implements ProductRep
     public function querySearch(ProductCriteriaExample $productCriteria): array
     {
         $builder = $this->createQueryBuilder($productCriteria);
-        EloquentApplyCriteria::apply($builder, $productCriteria);
+        EloquentApplyCriteria::apply($builder, $productCriteria, self::mapCriteriaFields());
+        dump($builder->toSql());
         return $this->castResult($builder->get()->all());
     }
 
     public function queryCount(ProductCriteriaExample $productCriteria): int
     {
         $builder = $this->createQueryBuilder($productCriteria);
-        EloquentApplyFilter::apply($builder, $productCriteria->filters());
+        EloquentApplyFilter::apply($builder, $productCriteria->filters(), self::mapCriteriaFields());
         return $builder->count();
     }
 
     private function createQueryBuilder(ProductCriteriaExample $productCriteria): Builder
     {
-        $builder = EloquentProductModel::query();
+        $builder = EloquentProductModel::query()
+            ->select('product.*');
 
         if ($productCriteria->hasField('category')) {
-            $builder->with('category');
+            $builder->join(
+                'category_product',
+                'category_product.product_id',
+                '=',
+                'product.id'
+            );
+            $builder->join(
+                'category',
+                'category.id',
+                '=',
+                'category_product.category_id'
+            );
         }
 
         return $builder;
+    }
+
+    private static function mapCriteriaFields(): array
+    {
+        return [
+            'category' => 'category.id'
+        ];
     }
 }
