@@ -10,6 +10,8 @@ class QueryMetadata
     private $limit;
     private $total;
     private $items;
+    private $pages;
+    private $currentPage;
 
     public function __construct(int $offset, int $limit, int $total)
     {
@@ -18,6 +20,8 @@ class QueryMetadata
         $this->limit = $limit;
         $this->total = $total;
         $this->items = $this->calculateItems();
+        $this->pages = $this->calculatePages();
+        $this->currentPage = $this->calculateCurrentPage();
     }
 
     public static function create(int $offset, int $limit, int $total): self
@@ -30,6 +34,24 @@ class QueryMetadata
         if ($offset < 0 || $limit < 0 || $total < 0) {
             throw new InvalidQueryMetadataException("$offset, $limit, $total");
         }
+    }
+
+    private function calculatePages(): int
+    {
+        if (0 !== $this->limit) {
+            return ceil($this->total / $this->limit);
+        }
+
+        return 0 === $this->offset ? 1 : 2;
+    }
+
+    private function calculateCurrentPage(): int
+    {
+        if (0 !== $this->limit) {
+            return 1 + floor($this->offset / $this->limit);
+        }
+
+        return 0 === $this->offset ? 1 : 2;
     }
 
     private function calculateItems(): int
@@ -56,5 +78,15 @@ class QueryMetadata
     public function items(): int
     {
         return $this->items;
+    }
+
+    public function pages(): int
+    {
+        return $this->pages;
+    }
+
+    public function currentPage(): int
+    {
+        return $this->currentPage;
     }
 }
