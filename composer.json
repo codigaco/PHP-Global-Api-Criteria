@@ -2,7 +2,13 @@
   "name": "quiquegilb/global-api-criteria",
   "version": "0.0.1",
   "description": "Global criteria php",
-  "keywords": ["criteria","api criteria", "doctrine", "eloquent", "array"],
+  "keywords": [
+    "criteria",
+    "api criteria",
+    "doctrine",
+    "eloquent",
+    "array"
+  ],
   "homepage": "https://github.com/QuiqueGilB/Global-Api-Criteria",
   "license": "MIT",
   "authors": [
@@ -17,8 +23,13 @@
   "autoload": {
     "psr-4": {
       "QuiqueGilB\\GlobalApiCriteria\\": "src/",
-      "QuiqueGilB\\GlobalApiCriteria\\Example\\": "example/",
-      "QuiqueGilB\\GlobalApiCriteria\\Tests\\": "tests/"
+      "QuiqueGilB\\GlobalApiCriteria\\Example\\": "example/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "QuiqueGilB\\GlobalApiCriteria\\Tests\\": "tests/src/",
+      "QuiqueGilB\\GlobalApiCriteria\\Example\\Tests\\": "tests/example/"
     }
   },
   "require-dev": {

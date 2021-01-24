@@ -4,7 +4,7 @@ namespace QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Infr
 
 use Illuminate\Database\Eloquent\Model;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model\Product;
-use QuiqueGilB\GlobalApiCriteria\Shared\Shared\Domain\Castable;
+use QuiqueGilB\GlobalApiCriteria\SharedModule\Shared\Domain\Castable;
 
 class EloquentProductModel extends Model implements Castable
 {

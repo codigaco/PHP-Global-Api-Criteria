@@ -3,7 +3,7 @@
 namespace QuiqueGilB\GlobalApiCriteria\Example\SharedContext\SharedModule\Infrastructure\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
-use QuiqueGilB\GlobalApiCriteria\Shared\Shared\Domain\Castable;
+use QuiqueGilB\GlobalApiCriteria\SharedModule\Shared\Domain\Castable;
 
 abstract class EloquentRepository
 {

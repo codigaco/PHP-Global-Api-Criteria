@@ -4,8 +4,9 @@ namespace QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Infr
 
 use Illuminate\Database\Eloquent\Model;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model\Category;
+use QuiqueGilB\GlobalApiCriteria\SharedModule\Shared\Domain\Castable;
 
-class EloquentCategoryModel extends Model
+class EloquentCategoryModel extends Model implements Castable
 {
     protected $table = 'category';
 
