@@ -2,14 +2,10 @@
 
 namespace QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Application\Apply;
 
-use Doctrine\DBAL\Query\Expression\CompositeExpression;
-use Doctrine\ORM\Query\Expr;
-use Doctrine\ORM\Query\Expr\Comparison;
 use Doctrine\ORM\QueryBuilder;
-use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Domain\ValueObject\ComparisonOperator;
+use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Domain\Exception\InvalidComparisonOperatorException;
 use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Domain\ValueObject\FilterGroup;
-use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Domain\ValueObject\LogicalOperator;
 use TypeError;
 
 class DoctrineApplyFilter
@@ -17,103 +13,102 @@ class DoctrineApplyFilter
     private static $iValue = 0;
 
     /**
-     * @param QueryBuilder|\Doctrine\DBAL\Query\QueryBuilder $builder
+     * @param QueryBuilder $builder
      * @param FilterGroup | Filter | null $filter
      * @param array $mapFields
-     * @return QueryBuilder|\Doctrine\DBAL\Query\QueryBuilder
+     * @return QueryBuilder
      */
-    public static function apply($builder, $filter, $mapFields = [])
+    public static function apply(QueryBuilder $builder, $filter, array $mapFields = []): QueryBuilder
     {
-        if (!$builder instanceof QueryBuilder && !$builder instanceof \Doctrine\DBAL\Query\QueryBuilder) {
-            throw new TypeError(gettype($builder));
-        }
-
         if (is_null($filter)) {
             return $builder;
         }
 
         $expr = self::createExpr($builder, $filter, $mapFields);
-        $builder->where($expr);
-        dd($builder->getDQL());
+        $builder->andWhere($expr);
+
         return $builder;
     }
 
-    /**
-     * @param QueryBuilder|\Doctrine\DBAL\Query\QueryBuilder $builder
-     * @param FilterGroup | Filter $filter
-     * @param array $mapFields
-     * @return CompositeExpression|Expr\Andx|Comparison|string
-     */
-    private static function createExpr($builder, $filter, array $mapFields)
+    private static function createExpr(QueryBuilder $builder, $filter, array $mapFields)
     {
         if (!$filter instanceof Filter && !$filter instanceof FilterGroup) {
             throw new TypeError(get_class($filter));
         }
 
         if ($filter instanceof FilterGroup) {
-            $logical = $filter->logicalOperator();
-            $expr = $logical->isAnd() ? $builder->expr()->andX() : $builder->expr()->orX();
+            return self::createGroupExpr($builder, $filter, $mapFields);
+        }
 
-            foreach ($filter->filters() as $filterItem) {
-                $expression = self::createExpr($builder, $filterItem, $mapFields);
+        return self::createComparisonExpr($builder, $filter, $mapFields);
+    }
 
-                if (!$logical->equals($filterItem->logicalOperator())) {
-                    $logical = $filterItem->logicalOperator();
-                    $expr = $logical->isAnd()
-                        ? $builder->expr()->andX($expr)
-                        : $builder->expr()->orX($expr);
-                }
+    private static function createGroupExpr(QueryBuilder $builder, FilterGroup $filterGroup, array $mapFields)
+    {
+        $logical = $filterGroup->logicalOperator();
+        $expr = $logical->isAnd() ? $builder->expr()->andX() : $builder->expr()->orX();
 
-                $expr->add($expression);
+        foreach ($filterGroup->filters() as $filter) {
+            $expression = self::createExpr($builder, $filter, $mapFields);
+
+            if (!$logical->equals($filter->logicalOperator())) {
+                $logical = $filter->logicalOperator();
+                $expr = $logical->isAnd()
+                    ? $builder->expr()->andX($expr)
+                    : $builder->expr()->orX($expr);
             }
 
-            return $expr;
+            $expr->add($expression);
         }
 
-        $valueAlias = self::getValueAlias();
-        $mapped = $mapFields[$filter->field()->value()] ?? $filter->field()->value();
-        $comparisonExpr = new Comparison($mapped, self::operator($filter->operator()), ":$valueAlias");
-
-        $builder->setParameter($valueAlias, $filter->value()->scalar());
-        return $comparisonExpr;
+        return $expr;
     }
 
-    private static function getValueAlias(): string
+    private static function createComparisonExpr(QueryBuilder $builder, Filter $filter, array $mapFields)
+    {
+        $mapped = $mapFields[$filter->field()->value()] ?? $filter->field()->value();
+
+        if ($filter->value()->type()->isNull()) {
+            return $filter->operator()->isEqual()
+                ? $builder->expr()->isNull($mapped)
+                : $builder->expr()->isNotNull($mapped);
+        }
+
+        $valueAlias = self::createValueAlias();
+        $builder->setParameter($valueAlias, $filter->value()->scalar());
+
+        $valueAlias = ':' . $valueAlias;
+
+        if ($filter->operator()->isEqual()) {
+            return $builder->expr()->eq($mapped, $valueAlias);
+        }
+        if ($filter->operator()->isNotEqual()) {
+            return $builder->expr()->neq($mapped, $valueAlias);
+        }
+        if ($filter->operator()->isGreater()) {
+            return $builder->expr()->gt($mapped, $valueAlias);
+        }
+        if ($filter->operator()->isGreaterOrEqual()) {
+            return $builder->expr()->gte($mapped, $valueAlias);
+        }
+        if ($filter->operator()->isLess()) {
+            return $builder->expr()->lt($mapped, $valueAlias);
+        }
+        if ($filter->operator()->isLessOrEqual()) {
+            return $builder->expr()->lte($mapped, $valueAlias);
+        }
+        if ($filter->operator()->isIn()) {
+            return $builder->expr()->in($mapped, $valueAlias);
+        }
+        if ($filter->operator()->isLike()) {
+            return $builder->expr()->like($mapped, $valueAlias);
+        }
+
+        throw new InvalidComparisonOperatorException($filter->operator()->value());
+    }
+
+    private static function createValueAlias(): string
     {
         return 'value' . ++self::$iValue;
-    }
-
-    private static function operator(ComparisonOperator $operator): string
-    {
-        if ($operator->isEqual()) {
-            return Comparison::EQ;
-        }
-
-        if ($operator->isNotEqual()) {
-            return Comparison::NEQ;
-        }
-
-        if ($operator->isGreater()) {
-            return Comparison::GT;
-        }
-
-        if ($operator->isGreaterOrEqual()) {
-            return Comparison::GTE;
-        }
-
-        if ($operator->isLess()) {
-            return Comparison::LT;
-        }
-        if ($operator->isLessOrEqual()) {
-            return Comparison::LTE;
-        }
-
-        throw new \RuntimeException('Operator not implemented');
-        if ($operator->isIn()) {
-        }
-        if ($operator->isLike()) {
-        }
-
-        return '=';
     }
 }
