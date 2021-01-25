@@ -53,18 +53,28 @@ class LogicalOperator
         return $this->value;
     }
 
+    public function type(): string
+    {
+        return self::MAP[$this->value];
+    }
+
     public function isAnd(): bool
     {
-        return self::MAP[$this->value] === self:: AND;
+        return $this->type() === self:: AND;
     }
 
     public function isOr(): bool
     {
-        return self::MAP[$this->value] === self:: OR;
+        return $this->type() === self:: OR;
     }
 
     public static function regex(): string
     {
         return '/^(and|or|&&|\|\|)$/i';
+    }
+
+    public function equals(?LogicalOperator $logicalOperator): bool
+    {
+        return null !== $logicalOperator && $logicalOperator->type() === $this->type();
     }
 }

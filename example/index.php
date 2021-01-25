@@ -3,7 +3,9 @@
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Application\Query\Product\SearchProductsQuery;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Application\Query\Product\SearchProductsQueryHandler;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Criteria\ProductCriteriaExample;
+use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model\Product;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model\ProductRepository;
+use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Infrastructure\Repository\DoctrineProductRepository;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Infrastructure\Repository\EloquentProductRepository;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -30,6 +32,12 @@ function getRepository(string $orm): ProductRepository
         return new EloquentProductRepository();
     }
 
+    if ('doctrine' === $orm) {
+        require_once __DIR__ . '/ProductContext/SharedModule/Infrastructure/Doctrine/configuration.php';
+        $entityManager = getEntityManager();
+        return new DoctrineProductRepository($entityManager, $entityManager->getClassMetadata(Product::class));
+    }
+
     throw new RuntimeException('Not recognized orm');
 }
 
@@ -37,7 +45,7 @@ function getRepository(string $orm): ProductRepository
 function getInputParams(): array
 {
     $defaultValues = [
-        'orm' => 'eloquent',
+        'orm' => 'doctrine',
         'filter' => null,
         'order' => null,
         'paginate' => null

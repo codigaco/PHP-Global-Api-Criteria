@@ -6,7 +6,7 @@ use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Criteria\Domain\ValueObject\Crit
 use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Criteria\Domain\ValueObject\FieldCriteriaRules;
 use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Domain\ValueObject\ComparisonOperator;
 
-/** @method static create(): ProductCriteriaExample */
+/** @method static create(): ProductCriteriaExample  */
 class ProductCriteriaExample extends Criteria
 {
     protected static function createRules(): array

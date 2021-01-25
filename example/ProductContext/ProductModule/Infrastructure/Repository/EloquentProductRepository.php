@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Builder;
 use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Criteria\Application\Apply\EloquentApplyCriteria;
 use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Application\Apply\EloquentApplyFilter;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Criteria\ProductCriteriaExample;
+use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model\Product;
 use QuiqueGilB\GlobalApiCriteria\Example\ProductContext\ProductModule\Domain\Model\ProductRepository;
 use QuiqueGilB\GlobalApiCriteria\Example\SharedContext\SharedModule\Infrastructure\Eloquent\EloquentRepository;
 
 class EloquentProductRepository extends EloquentRepository implements ProductRepository
 {
+    public function byId(int $productId):?Product
+    {
+        return EloquentProductModel::find($productId)->cast();
+    }
 
     public function querySearch(ProductCriteriaExample $productCriteria): array
     {

@@ -37,6 +37,7 @@
     "ext-pdo": "*",
     "phpunit/phpunit": "^9.5",
     "symfony/var-dumper": "^5.2",
-    "illuminate/database": "^8.22"
+    "illuminate/database": "^8.22",
+    "doctrine/orm": "^2.8"
   }
 }
