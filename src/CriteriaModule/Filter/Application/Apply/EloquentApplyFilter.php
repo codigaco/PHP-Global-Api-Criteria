@@ -86,7 +86,7 @@ class EloquentApplyFilter
             return 'LIKE';
         }
         if ($operator->isNotLike()) {
-            return 'LIKE';
+            return 'NOT LIKE';
         }
 
         throw new InvalidComparisonOperatorException($operator->value());
