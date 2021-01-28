@@ -42,12 +42,12 @@ class Filter extends BaseFilter
     {
         $operatorRegex = ComparisonOperator::regex();
 
-        [$field, $value] = preg_split($operatorRegex,$filterExpression);
-        preg_match($operatorRegex, $filterExpression, $operators );
+        [$field, $value] = preg_split($operatorRegex, $filterExpression);
+        preg_match($operatorRegex, $filterExpression, $operators);
 
         return new static(
-            new Field(trim($field)),
-            new ComparisonOperator(trim($operators[0])),
+            new Field($field),
+            new ComparisonOperator($operators[0] ?? ''),
             Value::deserialize(trim($value))
         );
     }

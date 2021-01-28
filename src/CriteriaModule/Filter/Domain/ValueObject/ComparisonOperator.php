@@ -54,7 +54,8 @@ class ComparisonOperator
 
     public function __construct(string $operator)
     {
-        $operator = strtolower($operator);
+        $operator = strtolower(trim($operator));
+
         self::validate($operator);
         $this->value = $operator;
     }

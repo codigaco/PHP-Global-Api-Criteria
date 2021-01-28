@@ -10,6 +10,8 @@ class Field
 
     public function __construct(string $field)
     {
+        $field = trim($field);
+
         self::validate($field);
         $this->value = $field;
     }
