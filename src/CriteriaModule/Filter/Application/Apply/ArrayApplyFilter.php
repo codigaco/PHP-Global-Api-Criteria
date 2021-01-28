@@ -62,8 +62,14 @@ class ArrayApplyFilter
         if ($filter->operator()->isLike()) {
             return false !== strpos($value, $filter->value()->scalar());
         }
+        if ($filter->operator()->isNotLike()) {
+            return false === strpos($value, $filter->value()->scalar());
+        }
         if ($filter->operator()->isIn()) {
             return in_array($value, $filter->value()->scalar(), true);
+        }
+        if ($filter->operator()->isNotIn()) {
+            return !in_array($value, $filter->value()->scalar(), true);
         }
         if ($filter->operator()->isLess()) {
             return $value < $filter->value()->scalar();

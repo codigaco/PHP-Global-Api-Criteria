@@ -3,6 +3,7 @@
 namespace QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Application\Apply;
 
 use Illuminate\Database\Eloquent\Builder;
+use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Domain\Exception\InvalidComparisonOperatorException;
 use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Domain\ValueObject\ComparisonOperator;
 use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Domain\ValueObject\Filter;
 use QuiqueGilB\GlobalApiCriteria\CriteriaModule\Filter\Domain\ValueObject\FilterGroup;
@@ -11,7 +12,7 @@ use TypeError;
 class EloquentApplyFilter
 {
     /**
-     * @param Builder|\Illuminate\Database\Query\Builder$builder
+     * @param Builder|\Illuminate\Database\Query\Builder $builder
      * @param $filter
      * @param array $mapFields
      * @return Builder|\Illuminate\Database\Query\Builder
@@ -78,10 +79,16 @@ class EloquentApplyFilter
         if ($operator->isIn()) {
             return 'IN';
         }
+        if ($operator->isNotIn()) {
+            return 'NOT IN';
+        }
         if ($operator->isLike()) {
             return 'LIKE';
         }
+        if ($operator->isNotLike()) {
+            return 'LIKE';
+        }
 
-        return '=';
+        throw new InvalidComparisonOperatorException($operator->value());
     }
 }
