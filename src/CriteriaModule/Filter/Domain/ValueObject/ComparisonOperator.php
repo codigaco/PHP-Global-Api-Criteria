@@ -13,7 +13,9 @@ class ComparisonOperator
     private const LESS = 'lt';
     private const LESS_OR_EQUAL = 'le';
     private const IN = 'in';
+    private const NOT_IN = "not in";
     private const LIKE = 'like';
+    private const NOT_LIKE = 'not like';
 
     private const MAP = [
         "=" => self::EQUAL,
@@ -23,6 +25,7 @@ class ComparisonOperator
         "!=" => self::NOT_EQUAL,
         "<>" => self::NOT_EQUAL,
         "ne" => self::NOT_EQUAL,
+        "is not" => self::NOT_EQUAL,
 
         "gt" => self::GREATER,
         ">" => self::GREATER,
@@ -39,8 +42,11 @@ class ComparisonOperator
         "lte" => self::LESS_OR_EQUAL,
 
         "in" => self::IN,
+        "not in" => self::NOT_IN,
 
         "like" => self::LIKE,
+        "not like" => self::NOT_LIKE,
+
         "contains" => self::LIKE
     ];
 
@@ -121,9 +127,19 @@ class ComparisonOperator
         return $this->type() === self::IN;
     }
 
+    public function isNotIn(): bool
+    {
+        return $this->type() === self::NOT_IN;
+    }
+
     public function isLike(): bool
     {
         return $this->type() === self::LIKE;
+    }
+
+    public function isNotLike(): bool
+    {
+        return $this->type() === self::NOT_LIKE;
     }
 
     public static function equal(): self
@@ -164,5 +180,10 @@ class ComparisonOperator
     public static function like(): self
     {
         return new static(self::LIKE);
+    }
+
+    public static function regex(): string
+    {
+        return '/ ' . str_replace(' ', '\s+', implode('|', array_keys(self::MAP))) . ' /i';
     }
 }

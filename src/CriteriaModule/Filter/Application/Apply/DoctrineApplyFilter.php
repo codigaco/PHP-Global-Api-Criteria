@@ -100,8 +100,14 @@ class DoctrineApplyFilter
         if ($filter->operator()->isIn()) {
             return $builder->expr()->in($mapped, $valueAlias);
         }
+        if ($filter->operator()->isNotIn()) {
+            return $builder->expr()->notIn($mapped, $valueAlias);
+        }
         if ($filter->operator()->isLike()) {
             return $builder->expr()->like($mapped, $valueAlias);
+        }
+        if ($filter->operator()->isNotLike()) {
+            return $builder->expr()->notLike($mapped, $valueAlias);
         }
 
         throw new InvalidComparisonOperatorException($filter->operator()->value());

@@ -40,18 +40,15 @@ class Filter extends BaseFilter
 
     public static function deserialize($filterExpression): self
     {
-        $firstSpace = strpos($filterExpression, ' ');
-        $field = substr($filterExpression, 0, $firstSpace);
+        $operatorRegex = ComparisonOperator::regex();
 
-        $secondSpace = strpos($filterExpression, ' ', $firstSpace + 1);
-        $operator = substr($filterExpression, $firstSpace + 1, $secondSpace - $firstSpace - 1);
-
-        $value = substr($filterExpression, $secondSpace + 1);
+        [$field, $value] = preg_split($operatorRegex,$filterExpression);
+        preg_match($operatorRegex, $filterExpression, $operators );
 
         return new static(
-            new Field($field),
-            new ComparisonOperator($operator),
-            Value::deserialize($value)
+            new Field(trim($field)),
+            new ComparisonOperator(trim($operators[0])),
+            Value::deserialize(trim($value))
         );
     }
 
