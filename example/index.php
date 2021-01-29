@@ -23,17 +23,18 @@ $criteria = ProductCriteriaExample::create()
 $query = new SearchProductsQuery($criteria);
 $queryResponse = $searchProductsQueryHandler($query);
 
+/** @noinspection ForgottenDebugOutputInspection */
 dump($queryResponse);
 
 function getRepository(string $orm): ProductRepository
 {
     if ('eloquent' === $orm) {
-        require_once __DIR__ . '/ProductContext/SharedModule/Infrastructure/Eloquent/configuration.php';
+//        require_once __DIR__ . '/ProductContext/SharedModule/Infrastructure/Eloquent/configuration.php';
         return new EloquentProductRepository();
     }
 
     if ('doctrine' === $orm) {
-        require_once __DIR__ . '/ProductContext/SharedModule/Infrastructure/Doctrine/configuration.php';
+//        require_once __DIR__ . '/ProductContext/SharedModule/Infrastructure/Doctrine/configuration.php';
         $entityManager = getEntityManager();
         return new DoctrineProductRepository($entityManager, $entityManager->getClassMetadata(Product::class));
     }
