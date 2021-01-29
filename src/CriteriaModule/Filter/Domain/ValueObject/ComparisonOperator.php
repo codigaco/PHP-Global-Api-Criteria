@@ -25,6 +25,7 @@ class ComparisonOperator
         "!=" => self::NOT_EQUAL,
         "<>" => self::NOT_EQUAL,
         "ne" => self::NOT_EQUAL,
+        "neq" => self::NOT_EQUAL,
         "is not" => self::NOT_EQUAL,
 
         "gt" => self::GREATER,
@@ -37,25 +38,25 @@ class ComparisonOperator
         "<" => self::LESS,
         "lt" => self::LESS,
 
-        "=<" => self::LESS_OR_EQUAL,
+        "<=" => self::LESS_OR_EQUAL,
         "le" => self::LESS_OR_EQUAL,
         "lte" => self::LESS_OR_EQUAL,
 
         "in" => self::IN,
+
         "not in" => self::NOT_IN,
 
         "like" => self::LIKE,
-        "not like" => self::NOT_LIKE,
+        "contains" => self::LIKE,
 
-        "contains" => self::LIKE
+        "not like" => self::NOT_LIKE
     ];
 
     private $value;
 
     public function __construct(string $operator)
     {
-        $operator = strtolower(trim($operator));
-
+        $operator = preg_replace('/\s+/', ' ', strtolower(trim($operator)));
         self::validate($operator);
         $this->value = $operator;
     }
@@ -185,6 +186,12 @@ class ComparisonOperator
 
     public static function regex(): string
     {
-        return '/ ' . str_replace(' ', '\s+', implode('|', array_keys(self::MAP))) . ' /i';
+        $operators = array_keys(self::MAP);
+        usort($operators,
+            static function ($a, $b) {
+                return strlen($b) <=> strlen($a);
+            });
+
+        return '/ ' . str_replace(' ', '\s+', implode(' | ', $operators)) . ' /i';
     }
 }
