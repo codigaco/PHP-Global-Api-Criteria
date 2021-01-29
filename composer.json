@@ -22,13 +22,13 @@
   },
   "autoload": {
     "psr-4": {
-      "QuiqueGilB\\GlobalApiCriteria\\": "src/",
-      "QuiqueGilB\\GlobalApiCriteria\\Example\\": "example/"
+      "QuiqueGilB\\GlobalApiCriteria\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "QuiqueGilB\\GlobalApiCriteria\\Tests\\": "tests/src/",
+      "QuiqueGilB\\GlobalApiCriteria\\Example\\": "example/",
       "QuiqueGilB\\GlobalApiCriteria\\Example\\Tests\\": "tests/example/"
     }
   },
