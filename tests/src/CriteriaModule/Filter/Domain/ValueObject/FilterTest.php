@@ -11,6 +11,166 @@ use QuiqueGilB\GlobalApiCriteria\SharedModule\Value\Domain\ValueObject\Value;
 class FilterTest extends TestCase
 {
     /** @test */
+    public function assert_deserialize_equals(): void
+    {
+        $filter = Filter::deserialize("name = a_name");
+        self::assertTrue($filter->operator()->isEqual());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertEquals('a_name', $filter->value()->scalar());
+
+        $filter = Filter::deserialize("name eq a_name");
+        self::assertTrue($filter->operator()->isEqual());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertEquals('a_name', $filter->value()->scalar());
+
+        $filter = Filter::deserialize("name is a_name");
+        self::assertTrue($filter->operator()->isEqual());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertEquals('a_name', $filter->value()->scalar());
+    }
+
+    /** @test */
+    public function assert_deserialize_not_equals(): void
+    {
+        $filter = Filter::deserialize("name != a_name");
+        self::assertTrue($filter->operator()->isNotEqual());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertEquals('a_name', $filter->value()->scalar());
+
+        $filter = Filter::deserialize("name neq a_name");
+        self::assertTrue($filter->operator()->isNotEqual());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertEquals('a_name', $filter->value()->scalar());
+
+        $filter = Filter::deserialize("name ne a_name");
+        self::assertTrue($filter->operator()->isNotEqual());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertEquals('a_name', $filter->value()->scalar());
+
+        $filter = Filter::deserialize("name <> a_name");
+        self::assertTrue($filter->operator()->isNotEqual());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertEquals('a_name', $filter->value()->scalar());
+
+        $filter = Filter::deserialize("name is not a_name");
+        self::assertTrue($filter->operator()->isNotEqual());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertEquals('a_name', $filter->value()->scalar());
+
+        $filter = Filter::deserialize("name is    not a_name");
+        self::assertTrue($filter->operator()->isNotEqual());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertEquals('a_name', $filter->value()->scalar());
+    }
+
+    /** @test */
+    public function assert_deserialize_greater(): void
+    {
+        $filter = Filter::deserialize("age > 21");
+        self::assertTrue($filter->operator()->isGreater());
+        self::assertEquals('age', $filter->field()->value());
+        self::assertEquals(21, $filter->value()->scalar());
+
+        $filter = Filter::deserialize("age gt 21");
+        self::assertTrue($filter->operator()->isGreater());
+        self::assertEquals('age', $filter->field()->value());
+        self::assertEquals(21, $filter->value()->scalar());
+    }
+
+    /** @test */
+    public function assert_deserialize_greater_or_equal(): void
+    {
+        $filter = Filter::deserialize("age >= 21");
+        self::assertTrue($filter->operator()->isGreaterOrEqual());
+        self::assertEquals('age', $filter->field()->value());
+        self::assertEquals(21, $filter->value()->scalar());
+
+        $filter = Filter::deserialize("age ge 21");
+        self::assertTrue($filter->operator()->isGreaterOrEqual());
+        self::assertEquals('age', $filter->field()->value());
+        self::assertEquals(21, $filter->value()->scalar());
+
+        $filter = Filter::deserialize("age gte 21");
+        self::assertTrue($filter->operator()->isGreaterOrEqual());
+        self::assertEquals('age', $filter->field()->value());
+        self::assertEquals(21, $filter->value()->scalar());
+    }
+
+    /** @test */
+    public function assert_deserialize_less(): void
+    {
+        $filter = Filter::deserialize("age < 21");
+        self::assertTrue($filter->operator()->isLess());
+        self::assertEquals('age', $filter->field()->value());
+        self::assertEquals(21, $filter->value()->scalar());
+
+        $filter = Filter::deserialize("age lt 21");
+        self::assertTrue($filter->operator()->isLess());
+        self::assertEquals('age', $filter->field()->value());
+        self::assertEquals(21, $filter->value()->scalar());
+    }
+
+    /** @test */
+    public function assert_deserialize_less_or_equal(): void
+    {
+        $filter = Filter::deserialize("age <= 21");
+        self::assertTrue($filter->operator()->isLessOrEqual());
+        self::assertEquals('age', $filter->field()->value());
+        self::assertEquals(21, $filter->value()->scalar());
+
+        $filter = Filter::deserialize("age le 21");
+        self::assertTrue($filter->operator()->isLessOrEqual());
+        self::assertEquals('age', $filter->field()->value());
+        self::assertEquals(21, $filter->value()->scalar());
+
+        $filter = Filter::deserialize("age lte 21");
+        self::assertTrue($filter->operator()->isLessOrEqual());
+        self::assertEquals('age', $filter->field()->value());
+        self::assertEquals(21, $filter->value()->scalar());
+    }
+
+    /** @test */
+    public function assert_deserialize_in(): void
+    {
+        $filter = Filter::deserialize("name in a_name, other_name");
+        self::assertTrue($filter->operator()->isIn());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertSame(['a_name','other_name'], $filter->value()->scalar());
+    }
+
+    /** @test */
+    public function assert_deserialize_not_in(): void
+    {
+        $filter = Filter::deserialize("name not in a_name, other_name");
+        self::assertTrue($filter->operator()->isNotIn());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertSame(['a_name','other_name'], $filter->value()->scalar());
+    }
+
+    /** @test */
+    public function assert_deserialize_like(): void
+    {
+        $filter = Filter::deserialize("name like a_name");
+        self::assertTrue($filter->operator()->isLike());
+        self::assertEquals('name', $filter->field()->value());
+        self::assertEquals('a_name', $filter->value()->scalar());
+    }
+
+    /** @test */
+    public function assert_deserialize_not_like(): void
+    {
+        $filter = Filter::deserialize("description not like a_description");
+        self::assertTrue($filter->operator()->isNotLike());
+        self::assertEquals('description', $filter->field()->value());
+        self::assertEquals('a_description', $filter->value()->scalar());
+
+        $filter = Filter::deserialize("description not   like a_description");
+        self::assertTrue($filter->operator()->isNotLike());
+        self::assertEquals('description', $filter->field()->value());
+        self::assertEquals('a_description', $filter->value()->scalar());
+    }
+
+    /** @test */
     public function serialize(): void
     {
         $filterText = 'name = "Marta"';

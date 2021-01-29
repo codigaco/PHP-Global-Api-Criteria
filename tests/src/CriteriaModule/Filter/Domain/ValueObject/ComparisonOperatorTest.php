@@ -26,7 +26,10 @@ class ComparisonOperatorTest extends TestCase
         self::assertTrue(ComparisonOperator::create("!=")->isNotEqual());
         self::assertTrue(ComparisonOperator::create("<>")->isNotEqual());
         self::assertTrue(ComparisonOperator::create("ne")->isNotEqual());
+        self::assertTrue(ComparisonOperator::create("neq")->isNotEqual());
         self::assertTrue(ComparisonOperator::create("NE")->isNotEqual());
+        self::assertTrue(ComparisonOperator::create("IS NOT")->isNotEqual());
+        self::assertTrue(ComparisonOperator::create("IS    NOT")->isNotEqual());
 
         self::assertTrue(ComparisonOperator::create("gt")->isGreater());
         self::assertTrue(ComparisonOperator::create("GT")->isGreater());
@@ -42,7 +45,7 @@ class ComparisonOperatorTest extends TestCase
         self::assertTrue(ComparisonOperator::create("lt")->isLess());
         self::assertTrue(ComparisonOperator::create("LT")->isLess());
 
-        self::assertTrue(ComparisonOperator::create("=<")->isLessOrEqual());
+        self::assertTrue(ComparisonOperator::create("<=")->isLessOrEqual());
         self::assertTrue(ComparisonOperator::create("le")->isLessOrEqual());
         self::assertTrue(ComparisonOperator::create("LE")->isLessOrEqual());
         self::assertTrue(ComparisonOperator::create("lte")->isLessOrEqual());
@@ -55,5 +58,11 @@ class ComparisonOperatorTest extends TestCase
         self::assertTrue(ComparisonOperator::create("LIKE")->isLike());
         self::assertTrue(ComparisonOperator::create("contains")->isLike());
         self::assertTrue(ComparisonOperator::create("CONTAINS")->isLike());
+
+        self::assertTrue(ComparisonOperator::create("not like")->isNotLike());
+        self::assertTrue(ComparisonOperator::create("not     like")->isNotLike());
+
+        self::assertTrue(ComparisonOperator::create("not in")->isNotIn());
+        self::assertTrue(ComparisonOperator::create("not     in")->isNotIn());
     }
 }
