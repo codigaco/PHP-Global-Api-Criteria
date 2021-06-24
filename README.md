@@ -17,7 +17,7 @@ $criteria = Criteria::create()
 ```
 
 ## Custom and security usage
-View [ProductCriteriaExample](https://github.com/QuiqueGilB/Global-Api-Criteria/blob/main/example/Product/Product/Domain/Criteria/ProductCriteriaExample.php) for more details.
+View [ProductCriteriaExample](https://github.com/QuiqueGilB/PHP-Global-Api-Criteria/blob/main/example/ProductContext/ProductModule/Domain/Criteria/ProductCriteriaExample.php) for more details.
 ```php
 $criteria = ProducCriteriaExample::create()
      ->withFilter(FilterGroup::deserialize('(name like computer or name like pc) and price > 500 and price <= 1000'))
